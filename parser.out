@@ -1,0 +1,129 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    DO
+    DOT
+    ELSE
+    FOR
+    FUNCION
+    IF
+    LETTER
+    NUMBER
+    SQUOTES
+    THEN
+    TO
+    WHILE
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAMA ID SEMICOLON variables function bloque
+Rule 2     variables -> VARS variables1
+Rule 3     variables1 -> tipo COLON listaids
+Rule 4     listaids -> ID listaids1
+Rule 5     listaids1 -> COMA listaids1 OR listaids2
+Rule 6     listaids2 -> LBRACKET INT RBRACKET COMA listaids1 OR LBRACKET INT RBRACKET SEMICOLON OR SEMICOLON
+Rule 7     tipo -> INT OR FLOAT OR CHAR
+Rule 8     function -> function tiporetorno ID LPAREN parametros RPAREN SEMICOLON variables bloque
+Rule 9     bloque -> LCBRACKET estatuto bloque1 OR LCBRACKET RCBRACKET
+Rule 10    bloque1 -> RCBRACKET OR estatuto
+Rule 11    estatuto -> asignacion OR retornofuncion OR lectura OR escritura
+Rule 12    tiporetorno -> INT OR FLOAT OR 0
+Rule 13    asignacion -> ID EQUALS expresion SEMICOLON OR ID LBRACKET exp RBRACKET EQUALS expresion SEMICOLON
+Rule 14    retornofuncion -> RETURN LPAREN exp RPAREN SEMICOLON
+Rule 15    expresion -> exp expresion1
+Rule 16    expresion1 -> GTHAN exp OR LTHAN exp
+Rule 17    exp -> termino exp1
+Rule 18    exp1 -> PLUS exp OR MINUS exp OR NONE
+Rule 19    termino -> factor termino1
+Rule 20    termino1 -> TIMES termino OR DIVIDE termino OR NONE
+Rule 21    factor -> PLUS varcte OR MINUS varcte OR varcte
+Rule 22    varcte -> INT OR FLOAT OR ID
+Rule 23    lectura -> READ LPAREN lectura1
+Rule 24    lectura1 -> RPAREN SEMICOLON OR listaids lectura1
+Rule 25    escritura -> WRITE LPAREN escritura1
+Rule 26    escritura1 -> letrero escritura2 OR expresion escritura2
+Rule 27    escritura2 -> RPAREN SEMICOLON OR escriutra1
+Rule 28    letrero -> QUOTES letrero1
+Rule 29    letrero1 -> CHAR QUOTES OR CHAR letrero1
+
+Terminals, with rules where they appear
+
+CHAR                 : 7 29 29
+COLON                : 3
+COMA                 : 5 6
+DIVIDE               : 20
+DO                   : 
+DOT                  : 
+ELSE                 : 
+EQUALS               : 13 13
+FLOAT                : 7 12 22
+FOR                  : 
+FUNCION              : 
+GTHAN                : 16
+ID                   : 1 4 8 13 13 22
+IF                   : 
+INT                  : 6 6 7 12 22
+LBRACKET             : 6 6 13
+LCBRACKET            : 9 9
+LETTER               : 
+LPAREN               : 8 14 23 25
+LTHAN                : 16
+MINUS                : 18 21
+NUMBER               : 
+OR                   : 5 6 6 7 7 9 10 11 11 11 12 12 13 16 18 18 20 20 21 21 22 22 24 26 27 29
+PLUS                 : 18 21
+PROGRAMA             : 1
+QUOTES               : 28 29
+RBRACKET             : 6 6 13
+RCBRACKET            : 9 10
+READ                 : 23
+RETURN               : 14
+RPAREN               : 8 14 24 27
+SEMICOLON            : 1 6 6 8 13 13 14 24 27
+SQUOTES              : 
+THEN                 : 
+TIMES                : 20
+TO                   : 
+VARS                 : 2
+WHILE                : 
+WRITE                : 25
+error                : 
+
+Nonterminals, with rules where they appear
+
+0                    : 12
+NONE                 : 18 20
+asignacion           : 11
+bloque               : 1 8
+bloque1              : 9
+escritura            : 11
+escritura1           : 25
+escritura2           : 26 26
+escriutra1           : 27
+estatuto             : 9 10
+exp                  : 13 14 15 16 16 18 18
+exp1                 : 17
+expresion            : 13 13 26
+expresion1           : 15
+factor               : 19
+function             : 1 8
+lectura              : 11
+lectura1             : 23 24
+letrero              : 26
+letrero1             : 28 29
+listaids             : 3 24
+listaids1            : 4 5 6
+listaids2            : 5
+parametros           : 8
+programa             : 0
+retornofuncion       : 11
+termino              : 17 20 20
+termino1             : 19
+tipo                 : 3
+tiporetorno          : 8
+varcte               : 21 21 21
+variables            : 1 8
+variables1           : 2
+

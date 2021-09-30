@@ -37,6 +37,12 @@ tokens = [
     'LCBRACKET',
     'RCBRACKET',
     'SQUOTES',
+    'COLON',
+    'SEMICOLON',
+    'COMA',
+    'DOT',
+    'OR',
+    'QUOTES',
 ] + list(reserved.values())
 
 t_ignore = ' \t'
@@ -55,6 +61,12 @@ t_LBRACKET = r'\['
 t_RCBRACKET = r'\{'
 t_LCBRACKET = r'\}'
 t_SQUOTES = r'\''
+t_COLON = r'\:'
+t_SEMICOLON = r'\;'
+t_COMA = r'\,'
+t_DOT = r'\.'
+t_OR = r'\|'
+t_QUOTES = r'\"'
 
 def t_LETTER(t):
     r'[a-zA-Z]'
@@ -66,7 +78,7 @@ def t_NUMBER(t):
     return t
 
 def t_ID(t):
-     r'LETTER(NUMBER)'
+     r'LETTER(LETTER | NUMBER)*'
      t.type = reserved.get(t.value,'ID')
      return t
     
@@ -82,7 +94,8 @@ lexer = lex.lex()
 
  # Test it out
 data = '''
-hola + 5 '
+if r > 5.5 then:
+    return a;
 '''
  
  # Give the lexer some input
