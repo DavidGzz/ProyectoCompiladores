@@ -11,7 +11,7 @@ reserved = {
     'return' : 'RETURN',
     'programa' : 'PROGRAMA',
     'vars' : 'VARS',
-    'funcion' : 'FUNCION',
+    'function' : 'FUNCTION',
     'int' : 'INT',
     'float' : 'FLOAT',
     'char' : 'CHAR',
@@ -43,6 +43,7 @@ tokens = [
     'DOT',
     'OR',
     'QUOTES',
+    'AND',
 ] + list(reserved.values())
 
 t_ignore = ' \t'
@@ -67,6 +68,7 @@ t_COMA = r'\,'
 t_DOT = r'\.'
 t_OR = r'\|'
 t_QUOTES = r'\"'
+t_AND = r'\&'
 
 def t_LETTER(t):
     r'[a-zA-Z]'

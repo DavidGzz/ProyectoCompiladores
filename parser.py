@@ -35,7 +35,7 @@ def p_tipo(p):
             | CHAR'''
 
 def p_function(p):
-    '''function : function tiporetorno ID LPAREN parametros RPAREN SEMICOLON variables bloque'''
+    '''function : FUNCTION tiporetorno ID LPAREN variables1 RPAREN SEMICOLON variables bloque'''
 
 def p_bloque(p):
     '''bloque : LCBRACKET estatuto bloque1 
@@ -78,21 +78,19 @@ def p_exp(p):
 def p_exp1(p):
     '''exp1 : PLUS exp 
             | MINUS exp 
-            | NONE''' #or eps
+            | SEMICOLON''' #or eps
 
 def p_termino(p):
     'termino : factor termino1'
 
 def p_termino1(p):
     '''termino1 : TIMES termino 
-                | DIVIDE termino 
-                | NONE''' #or eps
+                | DIVIDE termino
+                | SEMICOLON''' #or eps
 
 def p_factor(p):
-    'factor : LCBRACKET expresion RCBRACKET'
-
-def p_factor(p):
-    '''factor : PLUS varcte 
+    '''factor : LCBRACKET expresion RCBRACKET
+            | PLUS varcte 
             | MINUS varcte 
             | varcte'''
 
@@ -120,7 +118,7 @@ def p_escritura1(p):
 
 def p_escritura2(p):
     '''escritura2 : RPAREN SEMICOLON 
-                | escriutra1'''
+                | escritura1'''
 
 def p_letrero(p):
     'letrero : QUOTES letrero1'
