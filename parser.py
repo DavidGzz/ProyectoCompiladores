@@ -49,7 +49,9 @@ def p_estatuto(p):
     '''estatuto : asignacion 
                 | retornofuncion 
                 | lectura 
-                | escritura'''
+                | escritura
+                | decision
+                | repeticion'''
     #'estatuto : asignacion | lfvoid | retornofuncion | lectura | escritura | decision | repeticion'
 
 def p_tiporetorno(p):
@@ -126,6 +128,22 @@ def p_letrero(p):
 def p_letrero1(p):
     '''letrero1 : CHAR QUOTES 
                 | CHAR letrero1'''
+
+def p_repeticion(p):
+    '''repeticion : condicional
+                | nocondicional'''
+
+def p_decision(p):
+    '''decision : IF LPAREN expresion RPAREN THEN bloque decision1'''
+
+def p_decision1(p):
+    '''decision1 : ELSE bloque''' #falta el hacer nada
+
+def p_condicional(p):
+    '''condicional : WHILE LPAREN expresion RPAREN DO bloque'''
+
+def p_nocondicional(p):
+    '''nocondicional : FOR ID EQUALS exp TO exp DO bloque'''
 
 def p_error(p):
     print("Syntax error in input!")
