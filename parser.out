@@ -22,108 +22,136 @@ Rule 1     programa -> PROGRAMA ID SEMICOLON variables function bloque
 Rule 2     variables -> VARS variables1
 Rule 3     variables1 -> tipo COLON listaids
 Rule 4     listaids -> ID listaids1
-Rule 5     listaids1 -> COMA listaids1 OR listaids2
-Rule 6     listaids2 -> LBRACKET INT RBRACKET COMA listaids1 OR LBRACKET INT RBRACKET SEMICOLON OR SEMICOLON
-Rule 7     tipo -> INT OR FLOAT OR CHAR
-Rule 8     function -> function tiporetorno ID LPAREN parametros RPAREN SEMICOLON variables bloque
-Rule 9     bloque -> LCBRACKET estatuto bloque1 OR LCBRACKET RCBRACKET
-Rule 10    bloque1 -> RCBRACKET OR estatuto
-Rule 11    estatuto -> asignacion OR retornofuncion OR lectura OR escritura
-Rule 12    tiporetorno -> INT OR FLOAT OR 0
-Rule 13    asignacion -> ID EQUALS expresion SEMICOLON OR ID LBRACKET exp RBRACKET EQUALS expresion SEMICOLON
-Rule 14    retornofuncion -> RETURN LPAREN exp RPAREN SEMICOLON
-Rule 15    expresion -> exp expresion1
-Rule 16    expresion1 -> GTHAN exp OR LTHAN exp
-Rule 17    exp -> termino exp1
-Rule 18    exp1 -> PLUS exp OR MINUS exp OR NONE
-Rule 19    termino -> factor termino1
-Rule 20    termino1 -> TIMES termino OR DIVIDE termino OR NONE
-Rule 21    factor -> PLUS varcte OR MINUS varcte OR varcte
-Rule 22    varcte -> INT OR FLOAT OR ID
-Rule 23    lectura -> READ LPAREN lectura1
-Rule 24    lectura1 -> RPAREN SEMICOLON OR listaids lectura1
-Rule 25    escritura -> WRITE LPAREN escritura1
-Rule 26    escritura1 -> letrero escritura2 OR expresion escritura2
-Rule 27    escritura2 -> RPAREN SEMICOLON OR escriutra1
-Rule 28    letrero -> QUOTES letrero1
-Rule 29    letrero1 -> CHAR QUOTES OR CHAR letrero1
+Rule 5     listaids1 -> COMA ID listaids1
+Rule 6     listaids1 -> listaids2
+Rule 7     listaids1 -> SEMICOLON
+Rule 8     listaids2 -> LBRACKET INT RBRACKET listaids1
+Rule 9     listaids2 -> LBRACKET INT RBRACKET SEMICOLON
+Rule 10    listaids2 -> SEMICOLON
+Rule 11    tipo -> INT
+Rule 12    tipo -> FLOAT
+Rule 13    tipo -> CHAR
+Rule 14    function -> function tiporetorno ID LPAREN parametros RPAREN SEMICOLON variables bloque
+Rule 15    bloque -> LCBRACKET estatuto bloque1
+Rule 16    bloque -> LCBRACKET RCBRACKET
+Rule 17    bloque1 -> RCBRACKET
+Rule 18    bloque1 -> estatuto
+Rule 19    estatuto -> asignacion
+Rule 20    estatuto -> retornofuncion
+Rule 21    estatuto -> lectura
+Rule 22    estatuto -> escritura
+Rule 23    tiporetorno -> INT
+Rule 24    tiporetorno -> FLOAT
+Rule 25    asignacion -> ID EQUALS expresion SEMICOLON
+Rule 26    asignacion -> ID LBRACKET exp RBRACKET EQUALS expresion SEMICOLON
+Rule 27    retornofuncion -> RETURN LPAREN exp RPAREN SEMICOLON
+Rule 28    expresion -> exp expresion1
+Rule 29    expresion1 -> GTHAN exp
+Rule 30    expresion1 -> LTHAN exp
+Rule 31    expresion1 -> AND exp
+Rule 32    expresion1 -> OR exp
+Rule 33    exp -> termino exp1
+Rule 34    exp1 -> PLUS exp
+Rule 35    exp1 -> MINUS exp
+Rule 36    exp1 -> NONE
+Rule 37    termino -> factor termino1
+Rule 38    termino1 -> TIMES termino
+Rule 39    termino1 -> DIVIDE termino
+Rule 40    termino1 -> NONE
+Rule 41    factor -> PLUS varcte
+Rule 42    factor -> MINUS varcte
+Rule 43    factor -> varcte
+Rule 44    varcte -> INT
+Rule 45    varcte -> FLOAT
+Rule 46    varcte -> ID
+Rule 47    lectura -> READ LPAREN lectura1
+Rule 48    lectura1 -> RPAREN SEMICOLON
+Rule 49    lectura1 -> listaids lectura1
+Rule 50    escritura -> WRITE LPAREN escritura1
+Rule 51    escritura1 -> letrero escritura2
+Rule 52    escritura1 -> expresion escritura2
+Rule 53    escritura2 -> RPAREN SEMICOLON
+Rule 54    escritura2 -> escriutra1
+Rule 55    letrero -> QUOTES letrero1
+Rule 56    letrero1 -> CHAR QUOTES
+Rule 57    letrero1 -> CHAR letrero1
 
 Terminals, with rules where they appear
 
-CHAR                 : 7 29 29
+CHAR                 : 13 56 57
 COLON                : 3
-COMA                 : 5 6
-DIVIDE               : 20
+COMA                 : 5
+DIVIDE               : 39
 DO                   : 
 DOT                  : 
 ELSE                 : 
-EQUALS               : 13 13
-FLOAT                : 7 12 22
+EQUALS               : 25 26
+FLOAT                : 12 24 45
 FOR                  : 
 FUNCION              : 
-GTHAN                : 16
-ID                   : 1 4 8 13 13 22
+GTHAN                : 29
+ID                   : 1 4 5 14 25 26 46
 IF                   : 
-INT                  : 6 6 7 12 22
-LBRACKET             : 6 6 13
-LCBRACKET            : 9 9
+INT                  : 8 9 11 23 44
+LBRACKET             : 8 9 26
+LCBRACKET            : 15 16
 LETTER               : 
-LPAREN               : 8 14 23 25
-LTHAN                : 16
-MINUS                : 18 21
+LPAREN               : 14 27 47 50
+LTHAN                : 30
+MINUS                : 35 42
 NUMBER               : 
-OR                   : 5 6 6 7 7 9 10 11 11 11 12 12 13 16 18 18 20 20 21 21 22 22 24 26 27 29
-PLUS                 : 18 21
+OR                   : 32
+PLUS                 : 34 41
 PROGRAMA             : 1
-QUOTES               : 28 29
-RBRACKET             : 6 6 13
-RCBRACKET            : 9 10
-READ                 : 23
-RETURN               : 14
-RPAREN               : 8 14 24 27
-SEMICOLON            : 1 6 6 8 13 13 14 24 27
+QUOTES               : 55 56
+RBRACKET             : 8 9 26
+RCBRACKET            : 16 17
+READ                 : 47
+RETURN               : 27
+RPAREN               : 14 27 48 53
+SEMICOLON            : 1 7 9 10 14 25 26 27 48 53
 SQUOTES              : 
 THEN                 : 
-TIMES                : 20
+TIMES                : 38
 TO                   : 
 VARS                 : 2
 WHILE                : 
-WRITE                : 25
+WRITE                : 50
 error                : 
 
 Nonterminals, with rules where they appear
 
-0                    : 12
-NONE                 : 18 20
-asignacion           : 11
-bloque               : 1 8
-bloque1              : 9
-escritura            : 11
-escritura1           : 25
-escritura2           : 26 26
-escriutra1           : 27
-estatuto             : 9 10
-exp                  : 13 14 15 16 16 18 18
-exp1                 : 17
-expresion            : 13 13 26
-expresion1           : 15
-factor               : 19
-function             : 1 8
-lectura              : 11
-lectura1             : 23 24
-letrero              : 26
-letrero1             : 28 29
-listaids             : 3 24
-listaids1            : 4 5 6
-listaids2            : 5
-parametros           : 8
+AND                  : 31
+NONE                 : 36 40
+asignacion           : 19
+bloque               : 1 14
+bloque1              : 15
+escritura            : 22
+escritura1           : 50
+escritura2           : 51 52
+escriutra1           : 54
+estatuto             : 15 18
+exp                  : 26 27 28 29 30 31 32 34 35
+exp1                 : 33
+expresion            : 25 26 52
+expresion1           : 28
+factor               : 37
+function             : 1 14
+lectura              : 21
+lectura1             : 47 49
+letrero              : 51
+letrero1             : 55 57
+listaids             : 3 49
+listaids1            : 4 5 8
+listaids2            : 6
+parametros           : 14
 programa             : 0
-retornofuncion       : 11
-termino              : 17 20 20
-termino1             : 19
+retornofuncion       : 20
+termino              : 33 38 39
+termino1             : 37
 tipo                 : 3
-tiporetorno          : 8
-varcte               : 21 21 21
-variables            : 1 8
+tiporetorno          : 14
+varcte               : 41 42 43
+variables            : 1 14
 variables1           : 2
 
