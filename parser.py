@@ -11,6 +11,7 @@ def p_programa(p):
 
 def p_variables(p):
     'variables : VARS variables1'
+    p[0] = p[2]
     #'variables : VARS tipo COLON ID listaids | VARS tipo COLON ID LBRACKET INT RBRACKET listaids'
 
 def p_variables1(p):
@@ -60,49 +61,19 @@ def p_tiporetorno(p):
 
 def p_asignacion(p):
     '''asignacion : ID EQUALS expresion SEMICOLON 
-                | ID LBRACKET exp RBRACKET EQUALS expresion SEMICOLON'''
+                | ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON'''
 
 def p_retornofuncion(p):
-    '''retornofuncion : RETURN LPAREN exp RPAREN SEMICOLON'''
+    '''retornofuncion : RETURN LPAREN expresion RPAREN SEMICOLON'''
 
-def p_expresion(p):
-    '''expresion : exp expresion1'''
-
-def p_expresion1(p):
-    '''expresion1 : GTHAN exp 
-                | LTHAN exp
-                | AND exp
-                | OR exp'''
-
-def p_exp(p):
-    'exp : termino exp1'
-
-def p_exp1(p):
-    '''exp1 : PLUS exp 
-            | MINUS exp 
-            | SEMICOLON''' #or eps
-
-def p_termino(p):
-    'termino : factor termino1'
-
-def p_termino1(p):
-    '''termino1 : TIMES termino 
-                | DIVIDE termino
-                | SEMICOLON''' #or eps
-
-def p_factor(p):
-    '''factor : LCBRACKET expresion RCBRACKET
-            | PLUS varcte 
-            | MINUS varcte 
-            | varcte'''
-
-def p_varcte(p):
-    '''varcte : INT 
-            | FLOAT 
-            | ID'''
-
-#FACT| -> + VAR CTE | - VAR CTE | VAR CTE
-#VAR CTE -> cte l | cte f | id
+def p_expresion(p): 
+    '''expresion : expresion PLUS expresion
+                | expresion MINUS expresion
+                | expresion TIMES expresion
+                | expresion DIVIDE expresion
+                | LPAREN expresion RPAREN
+                | INT
+                | FLOAT'''
 
 def p_lectura(p):
     'lectura : READ LPAREN lectura1'
@@ -143,18 +114,18 @@ def p_condicional(p):
     '''condicional : WHILE LPAREN expresion RPAREN DO bloque'''
 
 def p_nocondicional(p):
-    '''nocondicional : FOR ID EQUALS exp TO exp DO bloque'''
+    '''nocondicional : FOR ID EQUALS expresion TO expresion DO bloque'''
 
 def p_error(p):
     print("Syntax error in input!")
 
 parser = yacc.yacc()
 
-#while True:
-#    try:
-#        s = input('calc > ')
-#    except EOFError:
-#        break
-#    if not s: continue
-#    result = parser.parse(s)
-#    print(result)
+while True:
+    try:
+        s = input('')
+    except EOFError:
+        break
+    if not s: continue
+    result = parser.parse(s)
+    print(result)

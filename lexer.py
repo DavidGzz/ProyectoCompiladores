@@ -17,11 +17,10 @@ reserved = {
     'char' : 'CHAR',
     'read' : 'READ',
     'write' : 'WRITE',
+    'eps' : 'EPS',
 }
 
 tokens = [
-    'NUMBER',
-    'LETTER',
     'ID',
     'PLUS',
     'MINUS',
@@ -44,9 +43,8 @@ tokens = [
     'OR',
     'QUOTES',
     'AND',
+    'EMPTY'
 ] + list(reserved.values())
-
-t_ignore = ' \t'
 
 t_PLUS = r'\+'
 t_MINUS = r'-'
@@ -76,7 +74,7 @@ def t_INTP(t):
     return t
 
 def t_PROGRAMA(t):
-    r'programa'
+    r'programa | PROGRAMA'
     t.type = reserved.get(t.value,'PROGRAMA')
     return t
 
@@ -159,10 +157,16 @@ def t_ID(t):
      r'[a-zA-Z]([a-zA-Z] | \d+)*'
      t.type = reserved.get(t.value,'ID')
      return t
+
+def p_EMPTY(p):
+    'empty :'
+    pass
     
 def t_newline(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+t_ignore = ' \t'
 
 def t_error(t):
      print("Illegal character '%s'" % t.value[0])
@@ -170,54 +174,16 @@ def t_error(t):
 
 lexer = lex.lex()
 
- # Test it out
-data = '''
-Programa MyRike;
-VARS
-	int: i, j, p, arreglo[10];
-	float: valor;
-
-function int fact (int: j)
-VARS int i;
-	{ i = j + (p - j*2+j);
-if (j == 1) then
-	{ return (j);}
-else
-	{return(j * fact(j-1);}
-}
-
-function void calcula(int y)
-VARS int x;
-{ x = 1;
-	while(x < 11) do
-		{y = y * arreglo[x]
-		x = x+1;}
-		write( arreglo[x])
-		}
-	write("acumulado", y);
-	}
-
-	principal()
-	{ read(p); j = p*2;
-	i = fact(p);
-	for i=1 to 10 do
-		{arreglo[i] = p + i;}
-	p = Media(arreglo);
-	while(i>0) do
-		{calcula (p-1)
-		j = fact(arreglo[i]);
-		write(j, i);
-		i = i + 1;
-		}
-	}
-'''
+# Test it out
+f = open("ejemplo.txt", "r")
+data = f.read()
  
- # Give the lexer some input
+# Give the lexer some input
 lexer.input(data)
  
- # Tokenize
+# Tokenize
 while True:
     tok = lexer.token()
     if not tok: 
-        break     # No more input
+        break     
     print(tok)
