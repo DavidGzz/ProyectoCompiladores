@@ -11,7 +11,6 @@ def p_programa(p):
 
 def p_variables(p):
     'variables : VARS variables1'
-    p[0] = p[2]
     #'variables : VARS tipo COLON ID listaids | VARS tipo COLON ID LBRACKET INT RBRACKET listaids'
 
 def p_variables1(p):
@@ -121,11 +120,16 @@ def p_error(p):
 
 parser = yacc.yacc()
 
+f = open("ejemplo.txt", "r")
+
 while True:
     try:
-        s = input('')
+        s = f.read()
+        print(s)
     except EOFError:
         break
-    if not s: continue
+    if not s: break
     result = parser.parse(s)
     print(result)
+
+f.close()
