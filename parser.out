@@ -31,29 +31,29 @@ Rule 16    estatuto -> lectura
 Rule 17    estatuto -> escritura
 Rule 18    estatuto -> decision
 Rule 19    estatuto -> repeticion
-Rule 20    estatuto -> RBRACKET
-Rule 21    asignacion -> ID EQUALS expresion SEMICOLON estatuto
-Rule 22    asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
-Rule 23    retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON
-Rule 24    expresion -> expresion PLUS expresion
-Rule 25    expresion -> expresion MINUS expresion
-Rule 26    expresion -> expresion TIMES expresion
-Rule 27    expresion -> expresion DIVIDE expresion
-Rule 28    expresion -> LPAREN expresion RPAREN
-Rule 29    expresion -> INT
-Rule 30    expresion -> FLOAT
-Rule 31    expresion -> ID
+Rule 20    estatuto -> RCBRACKET
+Rule 21    expresion -> expresion PLUS expresion
+Rule 22    expresion -> expresion MINUS expresion
+Rule 23    expresion -> expresion TIMES expresion
+Rule 24    expresion -> expresion DIVIDE expresion
+Rule 25    expresion -> LPAREN expresion RPAREN
+Rule 26    expresion -> INT
+Rule 27    expresion -> FLOAT
+Rule 28    expresion -> ID
+Rule 29    asignacion -> ID EQUALS expresion SEMICOLON estatuto
+Rule 30    asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
+Rule 31    retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON
 Rule 32    lectura -> READ LPAREN lectura1
-Rule 33    lectura1 -> RPAREN SEMICOLON
-Rule 34    lectura1 -> listaids lectura1
+Rule 33    lectura1 -> listaids SEMICOLON
+Rule 34    lectura1 -> RPAREN SEMICOLON
 Rule 35    escritura -> WRITE LPAREN escritura1
 Rule 36    escritura1 -> letrero escritura2
 Rule 37    escritura1 -> expresion escritura2
-Rule 38    escritura2 -> RPAREN SEMICOLON
-Rule 39    escritura2 -> escritura1
-Rule 40    letrero -> QUOTES letrero1
-Rule 41    letrero1 -> CHAR QUOTES
-Rule 42    letrero1 -> CHAR letrero1
+Rule 38    escritura1 -> RPAREN SEMICOLON
+Rule 39    escritura2 -> COMA escritura1
+Rule 40    letrero -> QUOTES CHAR QUOTES
+Rule 41    letrero -> QUOTES CHAR letrero
+Rule 42    letrero -> COMA escritura1
 Rule 43    repeticion -> condicional
 Rule 44    repeticion -> nocondicional
 Rule 45    decision -> IF LPAREN expresion RPAREN THEN bloque decision1
@@ -69,39 +69,39 @@ Rule 53    tiporetorno -> FLOAT
 Terminals, with rules where they appear
 
 AND                  : 
-CHAR                 : 41 42 51
+CHAR                 : 40 41 51
 COLON                : 3
-COMA                 : 5
-DIVIDE               : 27
+COMA                 : 5 39 42
+DIVIDE               : 24
 DO                   : 47 48
 DOT                  : 
 ELSE                 : 46
-EQUALS               : 21 22 48
-FLOAT                : 30 50 53
+EQUALS               : 29 30 48
+FLOAT                : 27 50 53
 FOR                  : 48
 FUNCTION             : 11
 GTHAN                : 
-ID                   : 1 4 5 11 21 22 31 48
+ID                   : 1 4 5 11 28 29 30 48
 IF                   : 45
-INT                  : 10 29 49 52
-LBRACKET             : 10 22
+INT                  : 10 26 49 52
+LBRACKET             : 10 30
 LCBRACKET            : 12 13
-LPAREN               : 11 23 28 32 35 45 47
+LPAREN               : 11 25 31 32 35 45 47
 LTHAN                : 
-MINUS                : 25
+MINUS                : 22
 OR                   : 
-PLUS                 : 24
+PLUS                 : 21
 PROGRAMA             : 1
-QUOTES               : 40 41
-RBRACKET             : 10 20 22
-RCBRACKET            : 13
+QUOTES               : 40 40 41
+RBRACKET             : 10 30
+RCBRACKET            : 13 20
 READ                 : 32
-RETURN               : 23
-RPAREN               : 9 23 28 33 38 45 47
-SEMICOLON            : 1 7 8 21 22 23 33 38
+RETURN               : 31
+RPAREN               : 9 25 31 34 38 45 47
+SEMICOLON            : 1 7 8 29 30 31 33 34 38
 SQUOTES              : 
 THEN                 : 45
-TIMES                : 26
+TIMES                : 23
 TO                   : 48
 VARS                 : 2
 WHILE                : 47
@@ -116,16 +116,15 @@ condicional          : 43
 decision             : 18
 decision1            : 45
 escritura            : 17
-escritura1           : 35 39
+escritura1           : 35 39 42
 escritura2           : 36 37
-estatuto             : 12 21 22
-expresion            : 21 22 22 23 24 24 25 25 26 26 27 27 28 37 45 47 48 48
+estatuto             : 12 29 30
+expresion            : 21 21 22 22 23 23 24 24 25 29 30 30 31 37 45 47 48 48
 function             : 1
 lectura              : 16
-lectura1             : 32 34
-letrero              : 36
-letrero1             : 40 42
-listaids             : 3 34
+lectura1             : 32
+letrero              : 36 41
+listaids             : 3 33
 listaids1            : 4 5 10
 listaids2            : 6
 nocondicional        : 44
@@ -299,8 +298,7 @@ state 19
     FUNCTION        reduce using rule 3 (variables1 -> tipo COLON listaids .)
     LCBRACKET       reduce using rule 3 (variables1 -> tipo COLON listaids .)
     VARS            reduce using rule 3 (variables1 -> tipo COLON listaids .)
-    RPAREN          reduce using rule 3 (variables1 -> tipo COLON listaids .)
-    ID              reduce using rule 3 (variables1 -> tipo COLON listaids .)
+    SEMICOLON       reduce using rule 3 (variables1 -> tipo COLON listaids .)
 
 
 state 20
@@ -343,8 +341,7 @@ state 22
     FUNCTION        reduce using rule 4 (listaids -> ID listaids1 .)
     LCBRACKET       reduce using rule 4 (listaids -> ID listaids1 .)
     VARS            reduce using rule 4 (listaids -> ID listaids1 .)
-    RPAREN          reduce using rule 4 (listaids -> ID listaids1 .)
-    ID              reduce using rule 4 (listaids -> ID listaids1 .)
+    SEMICOLON       reduce using rule 4 (listaids -> ID listaids1 .)
 
 
 state 23
@@ -361,8 +358,7 @@ state 24
     FUNCTION        reduce using rule 6 (listaids1 -> listaids2 .)
     LCBRACKET       reduce using rule 6 (listaids1 -> listaids2 .)
     VARS            reduce using rule 6 (listaids1 -> listaids2 .)
-    RPAREN          reduce using rule 6 (listaids1 -> listaids2 .)
-    ID              reduce using rule 6 (listaids1 -> listaids2 .)
+    SEMICOLON       reduce using rule 6 (listaids1 -> listaids2 .)
 
 
 state 25
@@ -377,8 +373,7 @@ state 25
     FUNCTION        reduce using rule 8 (listaids1 -> SEMICOLON .)
     LCBRACKET       reduce using rule 8 (listaids1 -> SEMICOLON .)
     VARS            reduce using rule 8 (listaids1 -> SEMICOLON .)
-    RPAREN          reduce using rule 8 (listaids1 -> SEMICOLON .)
-    ID              reduce using rule 8 (listaids1 -> SEMICOLON .)
+    SEMICOLON       reduce using rule 8 (listaids1 -> SEMICOLON .)
     INT             shift and go to state 11
     FLOAT           shift and go to state 12
     CHAR            shift and go to state 13
@@ -393,8 +388,7 @@ state 26
     FUNCTION        reduce using rule 9 (listaids1 -> RPAREN .)
     LCBRACKET       reduce using rule 9 (listaids1 -> RPAREN .)
     VARS            reduce using rule 9 (listaids1 -> RPAREN .)
-    RPAREN          reduce using rule 9 (listaids1 -> RPAREN .)
-    ID              reduce using rule 9 (listaids1 -> RPAREN .)
+    SEMICOLON       reduce using rule 9 (listaids1 -> RPAREN .)
 
 
 state 27
@@ -438,8 +432,7 @@ state 30
     FUNCTION        reduce using rule 7 (listaids1 -> SEMICOLON variables1 .)
     LCBRACKET       reduce using rule 7 (listaids1 -> SEMICOLON variables1 .)
     VARS            reduce using rule 7 (listaids1 -> SEMICOLON variables1 .)
-    RPAREN          reduce using rule 7 (listaids1 -> SEMICOLON variables1 .)
-    ID              reduce using rule 7 (listaids1 -> SEMICOLON variables1 .)
+    SEMICOLON       reduce using rule 7 (listaids1 -> SEMICOLON variables1 .)
 
 
 state 31
@@ -466,8 +459,7 @@ state 33
     FUNCTION        reduce using rule 5 (listaids1 -> COMA ID listaids1 .)
     LCBRACKET       reduce using rule 5 (listaids1 -> COMA ID listaids1 .)
     VARS            reduce using rule 5 (listaids1 -> COMA ID listaids1 .)
-    RPAREN          reduce using rule 5 (listaids1 -> COMA ID listaids1 .)
-    ID              reduce using rule 5 (listaids1 -> COMA ID listaids1 .)
+    SEMICOLON       reduce using rule 5 (listaids1 -> COMA ID listaids1 .)
 
 
 state 34
@@ -505,10 +497,10 @@ state 36
     (17) estatuto -> . escritura
     (18) estatuto -> . decision
     (19) estatuto -> . repeticion
-    (20) estatuto -> . RBRACKET
-    (21) asignacion -> . ID EQUALS expresion SEMICOLON estatuto
-    (22) asignacion -> . ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
-    (23) retornofuncion -> . RETURN LPAREN expresion RPAREN SEMICOLON
+    (20) estatuto -> . RCBRACKET
+    (29) asignacion -> . ID EQUALS expresion SEMICOLON estatuto
+    (30) asignacion -> . ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
+    (31) retornofuncion -> . RETURN LPAREN expresion RPAREN SEMICOLON
     (32) lectura -> . READ LPAREN lectura1
     (35) escritura -> . WRITE LPAREN escritura1
     (45) decision -> . IF LPAREN expresion RPAREN THEN bloque decision1
@@ -518,14 +510,13 @@ state 36
     (48) nocondicional -> . FOR ID EQUALS expresion TO expresion DO bloque
 
     RCBRACKET       shift and go to state 39
-    RBRACKET        shift and go to state 46
-    ID              shift and go to state 47
-    RETURN          shift and go to state 48
-    READ            shift and go to state 49
-    WRITE           shift and go to state 50
-    IF              shift and go to state 51
-    WHILE           shift and go to state 54
-    FOR             shift and go to state 55
+    ID              shift and go to state 46
+    RETURN          shift and go to state 47
+    READ            shift and go to state 48
+    WRITE           shift and go to state 49
+    IF              shift and go to state 50
+    WHILE           shift and go to state 53
+    FOR             shift and go to state 54
 
     estatuto                       shift and go to state 38
     asignacion                     shift and go to state 40
@@ -534,8 +525,8 @@ state 36
     escritura                      shift and go to state 43
     decision                       shift and go to state 44
     repeticion                     shift and go to state 45
-    condicional                    shift and go to state 52
-    nocondicional                  shift and go to state 53
+    condicional                    shift and go to state 51
+    nocondicional                  shift and go to state 52
 
 state 37
 
@@ -544,8 +535,7 @@ state 37
     FUNCTION        reduce using rule 10 (listaids2 -> LBRACKET INT RBRACKET listaids1 .)
     LCBRACKET       reduce using rule 10 (listaids2 -> LBRACKET INT RBRACKET listaids1 .)
     VARS            reduce using rule 10 (listaids2 -> LBRACKET INT RBRACKET listaids1 .)
-    RPAREN          reduce using rule 10 (listaids2 -> LBRACKET INT RBRACKET listaids1 .)
-    ID              reduce using rule 10 (listaids2 -> LBRACKET INT RBRACKET listaids1 .)
+    SEMICOLON       reduce using rule 10 (listaids2 -> LBRACKET INT RBRACKET listaids1 .)
 
 
 state 38
@@ -559,9 +549,15 @@ state 38
 state 39
 
     (13) bloque -> LCBRACKET RCBRACKET .
+    (20) estatuto -> RCBRACKET .
 
+  ! reduce/reduce conflict for $end resolved using rule 13 (bloque -> LCBRACKET RCBRACKET .)
+  ! reduce/reduce conflict for ELSE resolved using rule 13 (bloque -> LCBRACKET RCBRACKET .)
     $end            reduce using rule 13 (bloque -> LCBRACKET RCBRACKET .)
     ELSE            reduce using rule 13 (bloque -> LCBRACKET RCBRACKET .)
+
+  ! $end            [ reduce using rule 20 (estatuto -> RCBRACKET .) ]
+  ! ELSE            [ reduce using rule 20 (estatuto -> RCBRACKET .) ]
 
 
 state 40
@@ -614,50 +610,42 @@ state 45
 
 state 46
 
-    (20) estatuto -> RBRACKET .
+    (29) asignacion -> ID . EQUALS expresion SEMICOLON estatuto
+    (30) asignacion -> ID . LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
 
-    $end            reduce using rule 20 (estatuto -> RBRACKET .)
-    ELSE            reduce using rule 20 (estatuto -> RBRACKET .)
+    EQUALS          shift and go to state 55
+    LBRACKET        shift and go to state 56
 
 
 state 47
 
-    (21) asignacion -> ID . EQUALS expresion SEMICOLON estatuto
-    (22) asignacion -> ID . LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
+    (31) retornofuncion -> RETURN . LPAREN expresion RPAREN SEMICOLON
 
-    EQUALS          shift and go to state 56
-    LBRACKET        shift and go to state 57
+    LPAREN          shift and go to state 57
 
 
 state 48
 
-    (23) retornofuncion -> RETURN . LPAREN expresion RPAREN SEMICOLON
+    (32) lectura -> READ . LPAREN lectura1
 
     LPAREN          shift and go to state 58
 
 
 state 49
 
-    (32) lectura -> READ . LPAREN lectura1
+    (35) escritura -> WRITE . LPAREN escritura1
 
     LPAREN          shift and go to state 59
 
 
 state 50
 
-    (35) escritura -> WRITE . LPAREN escritura1
+    (45) decision -> IF . LPAREN expresion RPAREN THEN bloque decision1
 
     LPAREN          shift and go to state 60
 
 
 state 51
-
-    (45) decision -> IF . LPAREN expresion RPAREN THEN bloque decision1
-
-    LPAREN          shift and go to state 61
-
-
-state 52
 
     (43) repeticion -> condicional .
 
@@ -665,7 +653,7 @@ state 52
     ELSE            reduce using rule 43 (repeticion -> condicional .)
 
 
-state 53
+state 52
 
     (44) repeticion -> nocondicional .
 
@@ -673,285 +661,278 @@ state 53
     ELSE            reduce using rule 44 (repeticion -> nocondicional .)
 
 
-state 54
+state 53
 
     (47) condicional -> WHILE . LPAREN expresion RPAREN DO bloque
 
-    LPAREN          shift and go to state 62
+    LPAREN          shift and go to state 61
+
+
+state 54
+
+    (48) nocondicional -> FOR . ID EQUALS expresion TO expresion DO bloque
+
+    ID              shift and go to state 62
 
 
 state 55
 
-    (48) nocondicional -> FOR . ID EQUALS expresion TO expresion DO bloque
+    (29) asignacion -> ID EQUALS . expresion SEMICOLON estatuto
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
     ID              shift and go to state 63
 
+    expresion                      shift and go to state 64
 
 state 56
 
-    (21) asignacion -> ID EQUALS . expresion SEMICOLON estatuto
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (30) asignacion -> ID LBRACKET . expresion RBRACKET EQUALS expresion SEMICOLON estatuto
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
-    expresion                      shift and go to state 65
+    expresion                      shift and go to state 68
 
 state 57
 
-    (22) asignacion -> ID LBRACKET . expresion RBRACKET EQUALS expresion SEMICOLON estatuto
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (31) retornofuncion -> RETURN LPAREN . expresion RPAREN SEMICOLON
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
     expresion                      shift and go to state 69
 
 state 58
 
-    (23) retornofuncion -> RETURN LPAREN . expresion RPAREN SEMICOLON
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
-
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
-
-    expresion                      shift and go to state 70
-
-state 59
-
     (32) lectura -> READ LPAREN . lectura1
-    (33) lectura1 -> . RPAREN SEMICOLON
-    (34) lectura1 -> . listaids lectura1
+    (33) lectura1 -> . listaids SEMICOLON
+    (34) lectura1 -> . RPAREN SEMICOLON
     (4) listaids -> . ID listaids1
 
     RPAREN          shift and go to state 72
     ID              shift and go to state 20
 
-    lectura1                       shift and go to state 71
-    listaids                       shift and go to state 73
+    lectura1                       shift and go to state 70
+    listaids                       shift and go to state 71
 
-state 60
+state 59
 
     (35) escritura -> WRITE LPAREN . escritura1
     (36) escritura1 -> . letrero escritura2
     (37) escritura1 -> . expresion escritura2
-    (40) letrero -> . QUOTES letrero1
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (38) escritura1 -> . RPAREN SEMICOLON
+    (40) letrero -> . QUOTES CHAR QUOTES
+    (41) letrero -> . QUOTES CHAR letrero
+    (42) letrero -> . COMA escritura1
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
+    RPAREN          shift and go to state 76
     QUOTES          shift and go to state 77
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    COMA            shift and go to state 78
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
-    escritura1                     shift and go to state 74
-    letrero                        shift and go to state 75
-    expresion                      shift and go to state 76
+    escritura1                     shift and go to state 73
+    letrero                        shift and go to state 74
+    expresion                      shift and go to state 75
 
-state 61
+state 60
 
     (45) decision -> IF LPAREN . expresion RPAREN THEN bloque decision1
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
-
-    expresion                      shift and go to state 78
-
-state 62
-
-    (47) condicional -> WHILE LPAREN . expresion RPAREN DO bloque
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
-
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
     expresion                      shift and go to state 79
 
-state 63
+state 61
+
+    (47) condicional -> WHILE LPAREN . expresion RPAREN DO bloque
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
+
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
+
+    expresion                      shift and go to state 80
+
+state 62
 
     (48) nocondicional -> FOR ID . EQUALS expresion TO expresion DO bloque
 
-    EQUALS          shift and go to state 80
+    EQUALS          shift and go to state 81
+
+
+state 63
+
+    (28) expresion -> ID .
+
+    SEMICOLON       reduce using rule 28 (expresion -> ID .)
+    PLUS            reduce using rule 28 (expresion -> ID .)
+    MINUS           reduce using rule 28 (expresion -> ID .)
+    TIMES           reduce using rule 28 (expresion -> ID .)
+    DIVIDE          reduce using rule 28 (expresion -> ID .)
+    RBRACKET        reduce using rule 28 (expresion -> ID .)
+    RPAREN          reduce using rule 28 (expresion -> ID .)
+    COMA            reduce using rule 28 (expresion -> ID .)
+    TO              reduce using rule 28 (expresion -> ID .)
+    DO              reduce using rule 28 (expresion -> ID .)
 
 
 state 64
 
-    (31) expresion -> ID .
+    (29) asignacion -> ID EQUALS expresion . SEMICOLON estatuto
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    SEMICOLON       reduce using rule 31 (expresion -> ID .)
-    PLUS            reduce using rule 31 (expresion -> ID .)
-    MINUS           reduce using rule 31 (expresion -> ID .)
-    TIMES           reduce using rule 31 (expresion -> ID .)
-    DIVIDE          reduce using rule 31 (expresion -> ID .)
-    RBRACKET        reduce using rule 31 (expresion -> ID .)
-    RPAREN          reduce using rule 31 (expresion -> ID .)
-    QUOTES          reduce using rule 31 (expresion -> ID .)
-    LPAREN          reduce using rule 31 (expresion -> ID .)
-    INT             reduce using rule 31 (expresion -> ID .)
-    FLOAT           reduce using rule 31 (expresion -> ID .)
-    ID              reduce using rule 31 (expresion -> ID .)
-    TO              reduce using rule 31 (expresion -> ID .)
-    DO              reduce using rule 31 (expresion -> ID .)
+    SEMICOLON       shift and go to state 82
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
 
 state 65
 
-    (21) asignacion -> ID EQUALS expresion . SEMICOLON estatuto
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (25) expresion -> LPAREN . expresion RPAREN
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    SEMICOLON       shift and go to state 81
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
+    expresion                      shift and go to state 87
 
 state 66
 
-    (28) expresion -> LPAREN . expresion RPAREN
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (26) expresion -> INT .
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    SEMICOLON       reduce using rule 26 (expresion -> INT .)
+    PLUS            reduce using rule 26 (expresion -> INT .)
+    MINUS           reduce using rule 26 (expresion -> INT .)
+    TIMES           reduce using rule 26 (expresion -> INT .)
+    DIVIDE          reduce using rule 26 (expresion -> INT .)
+    RBRACKET        reduce using rule 26 (expresion -> INT .)
+    RPAREN          reduce using rule 26 (expresion -> INT .)
+    COMA            reduce using rule 26 (expresion -> INT .)
+    TO              reduce using rule 26 (expresion -> INT .)
+    DO              reduce using rule 26 (expresion -> INT .)
 
-    expresion                      shift and go to state 86
 
 state 67
 
-    (29) expresion -> INT .
+    (27) expresion -> FLOAT .
 
-    SEMICOLON       reduce using rule 29 (expresion -> INT .)
-    PLUS            reduce using rule 29 (expresion -> INT .)
-    MINUS           reduce using rule 29 (expresion -> INT .)
-    TIMES           reduce using rule 29 (expresion -> INT .)
-    DIVIDE          reduce using rule 29 (expresion -> INT .)
-    RBRACKET        reduce using rule 29 (expresion -> INT .)
-    RPAREN          reduce using rule 29 (expresion -> INT .)
-    QUOTES          reduce using rule 29 (expresion -> INT .)
-    LPAREN          reduce using rule 29 (expresion -> INT .)
-    INT             reduce using rule 29 (expresion -> INT .)
-    FLOAT           reduce using rule 29 (expresion -> INT .)
-    ID              reduce using rule 29 (expresion -> INT .)
-    TO              reduce using rule 29 (expresion -> INT .)
-    DO              reduce using rule 29 (expresion -> INT .)
+    SEMICOLON       reduce using rule 27 (expresion -> FLOAT .)
+    PLUS            reduce using rule 27 (expresion -> FLOAT .)
+    MINUS           reduce using rule 27 (expresion -> FLOAT .)
+    TIMES           reduce using rule 27 (expresion -> FLOAT .)
+    DIVIDE          reduce using rule 27 (expresion -> FLOAT .)
+    RBRACKET        reduce using rule 27 (expresion -> FLOAT .)
+    RPAREN          reduce using rule 27 (expresion -> FLOAT .)
+    COMA            reduce using rule 27 (expresion -> FLOAT .)
+    TO              reduce using rule 27 (expresion -> FLOAT .)
+    DO              reduce using rule 27 (expresion -> FLOAT .)
 
 
 state 68
 
-    (30) expresion -> FLOAT .
+    (30) asignacion -> ID LBRACKET expresion . RBRACKET EQUALS expresion SEMICOLON estatuto
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    SEMICOLON       reduce using rule 30 (expresion -> FLOAT .)
-    PLUS            reduce using rule 30 (expresion -> FLOAT .)
-    MINUS           reduce using rule 30 (expresion -> FLOAT .)
-    TIMES           reduce using rule 30 (expresion -> FLOAT .)
-    DIVIDE          reduce using rule 30 (expresion -> FLOAT .)
-    RBRACKET        reduce using rule 30 (expresion -> FLOAT .)
-    RPAREN          reduce using rule 30 (expresion -> FLOAT .)
-    QUOTES          reduce using rule 30 (expresion -> FLOAT .)
-    LPAREN          reduce using rule 30 (expresion -> FLOAT .)
-    INT             reduce using rule 30 (expresion -> FLOAT .)
-    FLOAT           reduce using rule 30 (expresion -> FLOAT .)
-    ID              reduce using rule 30 (expresion -> FLOAT .)
-    TO              reduce using rule 30 (expresion -> FLOAT .)
-    DO              reduce using rule 30 (expresion -> FLOAT .)
+    RBRACKET        shift and go to state 88
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
 
 state 69
 
-    (22) asignacion -> ID LBRACKET expresion . RBRACKET EQUALS expresion SEMICOLON estatuto
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (31) retornofuncion -> RETURN LPAREN expresion . RPAREN SEMICOLON
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    RBRACKET        shift and go to state 87
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
+    RPAREN          shift and go to state 89
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
 
 state 70
-
-    (23) retornofuncion -> RETURN LPAREN expresion . RPAREN SEMICOLON
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
-
-    RPAREN          shift and go to state 88
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
-
-
-state 71
 
     (32) lectura -> READ LPAREN lectura1 .
 
@@ -959,27 +940,21 @@ state 71
     ELSE            reduce using rule 32 (lectura -> READ LPAREN lectura1 .)
 
 
+state 71
+
+    (33) lectura1 -> listaids . SEMICOLON
+
+    SEMICOLON       shift and go to state 90
+
+
 state 72
 
-    (33) lectura1 -> RPAREN . SEMICOLON
+    (34) lectura1 -> RPAREN . SEMICOLON
 
-    SEMICOLON       shift and go to state 89
+    SEMICOLON       shift and go to state 91
 
 
 state 73
-
-    (34) lectura1 -> listaids . lectura1
-    (33) lectura1 -> . RPAREN SEMICOLON
-    (34) lectura1 -> . listaids lectura1
-    (4) listaids -> . ID listaids1
-
-    RPAREN          shift and go to state 72
-    ID              shift and go to state 20
-
-    listaids                       shift and go to state 73
-    lectura1                       shift and go to state 90
-
-state 74
 
     (35) escritura -> WRITE LPAREN escritura1 .
 
@@ -987,144 +962,139 @@ state 74
     ELSE            reduce using rule 35 (escritura -> WRITE LPAREN escritura1 .)
 
 
-state 75
+state 74
 
     (36) escritura1 -> letrero . escritura2
-    (38) escritura2 -> . RPAREN SEMICOLON
-    (39) escritura2 -> . escritura1
-    (36) escritura1 -> . letrero escritura2
-    (37) escritura1 -> . expresion escritura2
-    (40) letrero -> . QUOTES letrero1
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (39) escritura2 -> . COMA escritura1
 
-    RPAREN          shift and go to state 92
-    QUOTES          shift and go to state 77
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    COMA            shift and go to state 93
 
-    letrero                        shift and go to state 75
-    escritura2                     shift and go to state 91
-    escritura1                     shift and go to state 93
-    expresion                      shift and go to state 76
+    escritura2                     shift and go to state 92
+
+state 75
+
+    (37) escritura1 -> expresion . escritura2
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
+    (39) escritura2 -> . COMA escritura1
+
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
+    COMA            shift and go to state 93
+
+    escritura2                     shift and go to state 94
 
 state 76
 
-    (37) escritura1 -> expresion . escritura2
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
-    (38) escritura2 -> . RPAREN SEMICOLON
-    (39) escritura2 -> . escritura1
-    (36) escritura1 -> . letrero escritura2
-    (37) escritura1 -> . expresion escritura2
-    (40) letrero -> . QUOTES letrero1
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (38) escritura1 -> RPAREN . SEMICOLON
 
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
-    RPAREN          shift and go to state 92
-    QUOTES          shift and go to state 77
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    SEMICOLON       shift and go to state 95
 
-    expresion                      shift and go to state 76
-    escritura2                     shift and go to state 94
-    escritura1                     shift and go to state 93
-    letrero                        shift and go to state 75
 
 state 77
 
-    (40) letrero -> QUOTES . letrero1
-    (41) letrero1 -> . CHAR QUOTES
-    (42) letrero1 -> . CHAR letrero1
+    (40) letrero -> QUOTES . CHAR QUOTES
+    (41) letrero -> QUOTES . CHAR letrero
 
     CHAR            shift and go to state 96
 
-    letrero1                       shift and go to state 95
 
 state 78
 
-    (45) decision -> IF LPAREN expresion . RPAREN THEN bloque decision1
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (42) letrero -> COMA . escritura1
+    (36) escritura1 -> . letrero escritura2
+    (37) escritura1 -> . expresion escritura2
+    (38) escritura1 -> . RPAREN SEMICOLON
+    (40) letrero -> . QUOTES CHAR QUOTES
+    (41) letrero -> . QUOTES CHAR letrero
+    (42) letrero -> . COMA escritura1
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    RPAREN          shift and go to state 97
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
+    RPAREN          shift and go to state 76
+    QUOTES          shift and go to state 77
+    COMA            shift and go to state 78
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
+    escritura1                     shift and go to state 97
+    letrero                        shift and go to state 74
+    expresion                      shift and go to state 75
 
 state 79
 
-    (47) condicional -> WHILE LPAREN expresion . RPAREN DO bloque
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (45) decision -> IF LPAREN expresion . RPAREN THEN bloque decision1
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
     RPAREN          shift and go to state 98
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
 
 state 80
 
-    (48) nocondicional -> FOR ID EQUALS . expresion TO expresion DO bloque
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (47) condicional -> WHILE LPAREN expresion . RPAREN DO bloque
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    RPAREN          shift and go to state 99
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
-    expresion                      shift and go to state 99
 
 state 81
 
-    (21) asignacion -> ID EQUALS expresion SEMICOLON . estatuto
+    (48) nocondicional -> FOR ID EQUALS . expresion TO expresion DO bloque
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
+
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
+
+    expresion                      shift and go to state 100
+
+state 82
+
+    (29) asignacion -> ID EQUALS expresion SEMICOLON . estatuto
     (14) estatuto -> . asignacion
     (15) estatuto -> . retornofuncion
     (16) estatuto -> . lectura
     (17) estatuto -> . escritura
     (18) estatuto -> . decision
     (19) estatuto -> . repeticion
-    (20) estatuto -> . RBRACKET
-    (21) asignacion -> . ID EQUALS expresion SEMICOLON estatuto
-    (22) asignacion -> . ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
-    (23) retornofuncion -> . RETURN LPAREN expresion RPAREN SEMICOLON
+    (20) estatuto -> . RCBRACKET
+    (29) asignacion -> . ID EQUALS expresion SEMICOLON estatuto
+    (30) asignacion -> . ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
+    (31) retornofuncion -> . RETURN LPAREN expresion RPAREN SEMICOLON
     (32) lectura -> . READ LPAREN lectura1
     (35) escritura -> . WRITE LPAREN escritura1
     (45) decision -> . IF LPAREN expresion RPAREN THEN bloque decision1
@@ -1133,168 +1103,184 @@ state 81
     (47) condicional -> . WHILE LPAREN expresion RPAREN DO bloque
     (48) nocondicional -> . FOR ID EQUALS expresion TO expresion DO bloque
 
-    RBRACKET        shift and go to state 46
-    ID              shift and go to state 47
-    RETURN          shift and go to state 48
-    READ            shift and go to state 49
-    WRITE           shift and go to state 50
-    IF              shift and go to state 51
-    WHILE           shift and go to state 54
-    FOR             shift and go to state 55
+    RCBRACKET       shift and go to state 102
+    ID              shift and go to state 46
+    RETURN          shift and go to state 47
+    READ            shift and go to state 48
+    WRITE           shift and go to state 49
+    IF              shift and go to state 50
+    WHILE           shift and go to state 53
+    FOR             shift and go to state 54
 
-    estatuto                       shift and go to state 100
+    estatuto                       shift and go to state 101
     asignacion                     shift and go to state 40
     retornofuncion                 shift and go to state 41
     lectura                        shift and go to state 42
     escritura                      shift and go to state 43
     decision                       shift and go to state 44
     repeticion                     shift and go to state 45
-    condicional                    shift and go to state 52
-    nocondicional                  shift and go to state 53
-
-state 82
-
-    (24) expresion -> expresion PLUS . expresion
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
-
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
-
-    expresion                      shift and go to state 101
+    condicional                    shift and go to state 51
+    nocondicional                  shift and go to state 52
 
 state 83
 
-    (25) expresion -> expresion MINUS . expresion
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (21) expresion -> expresion PLUS . expresion
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
-
-    expresion                      shift and go to state 102
-
-state 84
-
-    (26) expresion -> expresion TIMES . expresion
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
-
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
     expresion                      shift and go to state 103
 
-state 85
+state 84
 
-    (27) expresion -> expresion DIVIDE . expresion
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (22) expresion -> expresion MINUS . expresion
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
     expresion                      shift and go to state 104
 
+state 85
+
+    (23) expresion -> expresion TIMES . expresion
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
+
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
+
+    expresion                      shift and go to state 105
+
 state 86
 
-    (28) expresion -> LPAREN expresion . RPAREN
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (24) expresion -> expresion DIVIDE . expresion
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    RPAREN          shift and go to state 105
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
+    expresion                      shift and go to state 106
 
 state 87
 
-    (22) asignacion -> ID LBRACKET expresion RBRACKET . EQUALS expresion SEMICOLON estatuto
+    (25) expresion -> LPAREN expresion . RPAREN
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    EQUALS          shift and go to state 106
+    RPAREN          shift and go to state 107
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
 
 state 88
 
-    (23) retornofuncion -> RETURN LPAREN expresion RPAREN . SEMICOLON
+    (30) asignacion -> ID LBRACKET expresion RBRACKET . EQUALS expresion SEMICOLON estatuto
 
-    SEMICOLON       shift and go to state 107
+    EQUALS          shift and go to state 108
 
 
 state 89
 
-    (33) lectura1 -> RPAREN SEMICOLON .
+    (31) retornofuncion -> RETURN LPAREN expresion RPAREN . SEMICOLON
 
-    $end            reduce using rule 33 (lectura1 -> RPAREN SEMICOLON .)
-    ELSE            reduce using rule 33 (lectura1 -> RPAREN SEMICOLON .)
+    SEMICOLON       shift and go to state 109
 
 
 state 90
 
-    (34) lectura1 -> listaids lectura1 .
+    (33) lectura1 -> listaids SEMICOLON .
 
-    $end            reduce using rule 34 (lectura1 -> listaids lectura1 .)
-    ELSE            reduce using rule 34 (lectura1 -> listaids lectura1 .)
+    $end            reduce using rule 33 (lectura1 -> listaids SEMICOLON .)
+    ELSE            reduce using rule 33 (lectura1 -> listaids SEMICOLON .)
 
 
 state 91
+
+    (34) lectura1 -> RPAREN SEMICOLON .
+
+    $end            reduce using rule 34 (lectura1 -> RPAREN SEMICOLON .)
+    ELSE            reduce using rule 34 (lectura1 -> RPAREN SEMICOLON .)
+
+
+state 92
 
     (36) escritura1 -> letrero escritura2 .
 
     $end            reduce using rule 36 (escritura1 -> letrero escritura2 .)
     ELSE            reduce using rule 36 (escritura1 -> letrero escritura2 .)
-
-
-state 92
-
-    (38) escritura2 -> RPAREN . SEMICOLON
-
-    SEMICOLON       shift and go to state 108
+    COMA            reduce using rule 36 (escritura1 -> letrero escritura2 .)
 
 
 state 93
 
-    (39) escritura2 -> escritura1 .
+    (39) escritura2 -> COMA . escritura1
+    (36) escritura1 -> . letrero escritura2
+    (37) escritura1 -> . expresion escritura2
+    (38) escritura1 -> . RPAREN SEMICOLON
+    (40) letrero -> . QUOTES CHAR QUOTES
+    (41) letrero -> . QUOTES CHAR letrero
+    (42) letrero -> . COMA escritura1
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    $end            reduce using rule 39 (escritura2 -> escritura1 .)
-    ELSE            reduce using rule 39 (escritura2 -> escritura1 .)
+    RPAREN          shift and go to state 76
+    QUOTES          shift and go to state 77
+    COMA            shift and go to state 78
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
+    escritura1                     shift and go to state 110
+    letrero                        shift and go to state 74
+    expresion                      shift and go to state 75
 
 state 94
 
@@ -1302,265 +1288,253 @@ state 94
 
     $end            reduce using rule 37 (escritura1 -> expresion escritura2 .)
     ELSE            reduce using rule 37 (escritura1 -> expresion escritura2 .)
+    COMA            reduce using rule 37 (escritura1 -> expresion escritura2 .)
 
 
 state 95
 
-    (40) letrero -> QUOTES letrero1 .
+    (38) escritura1 -> RPAREN SEMICOLON .
 
-    RPAREN          reduce using rule 40 (letrero -> QUOTES letrero1 .)
-    QUOTES          reduce using rule 40 (letrero -> QUOTES letrero1 .)
-    LPAREN          reduce using rule 40 (letrero -> QUOTES letrero1 .)
-    INT             reduce using rule 40 (letrero -> QUOTES letrero1 .)
-    FLOAT           reduce using rule 40 (letrero -> QUOTES letrero1 .)
-    ID              reduce using rule 40 (letrero -> QUOTES letrero1 .)
+    $end            reduce using rule 38 (escritura1 -> RPAREN SEMICOLON .)
+    ELSE            reduce using rule 38 (escritura1 -> RPAREN SEMICOLON .)
+    COMA            reduce using rule 38 (escritura1 -> RPAREN SEMICOLON .)
 
 
 state 96
 
-    (41) letrero1 -> CHAR . QUOTES
-    (42) letrero1 -> CHAR . letrero1
-    (41) letrero1 -> . CHAR QUOTES
-    (42) letrero1 -> . CHAR letrero1
+    (40) letrero -> QUOTES CHAR . QUOTES
+    (41) letrero -> QUOTES CHAR . letrero
+    (40) letrero -> . QUOTES CHAR QUOTES
+    (41) letrero -> . QUOTES CHAR letrero
+    (42) letrero -> . COMA escritura1
 
-    QUOTES          shift and go to state 109
-    CHAR            shift and go to state 96
+    QUOTES          shift and go to state 111
+    COMA            shift and go to state 78
 
-    letrero1                       shift and go to state 110
+    letrero                        shift and go to state 112
 
 state 97
 
-    (45) decision -> IF LPAREN expresion RPAREN . THEN bloque decision1
+    (42) letrero -> COMA escritura1 .
 
-    THEN            shift and go to state 111
+    COMA            reduce using rule 42 (letrero -> COMA escritura1 .)
 
 
 state 98
 
-    (47) condicional -> WHILE LPAREN expresion RPAREN . DO bloque
+    (45) decision -> IF LPAREN expresion RPAREN . THEN bloque decision1
 
-    DO              shift and go to state 112
+    THEN            shift and go to state 113
 
 
 state 99
 
-    (48) nocondicional -> FOR ID EQUALS expresion . TO expresion DO bloque
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (47) condicional -> WHILE LPAREN expresion RPAREN . DO bloque
 
-    TO              shift and go to state 113
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
+    DO              shift and go to state 114
 
 
 state 100
 
-    (21) asignacion -> ID EQUALS expresion SEMICOLON estatuto .
+    (48) nocondicional -> FOR ID EQUALS expresion . TO expresion DO bloque
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    $end            reduce using rule 21 (asignacion -> ID EQUALS expresion SEMICOLON estatuto .)
-    ELSE            reduce using rule 21 (asignacion -> ID EQUALS expresion SEMICOLON estatuto .)
+    TO              shift and go to state 115
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
 
 state 101
 
-    (24) expresion -> expresion PLUS expresion .
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (29) asignacion -> ID EQUALS expresion SEMICOLON estatuto .
 
-    SEMICOLON       reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    PLUS            reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    MINUS           reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    RBRACKET        reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    RPAREN          reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    QUOTES          reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    LPAREN          reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    INT             reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    FLOAT           reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    ID              reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    TO              reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    DO              reduce using rule 24 (expresion -> expresion PLUS expresion .)
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
-
-  ! TIMES           [ reduce using rule 24 (expresion -> expresion PLUS expresion .) ]
-  ! DIVIDE          [ reduce using rule 24 (expresion -> expresion PLUS expresion .) ]
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+    $end            reduce using rule 29 (asignacion -> ID EQUALS expresion SEMICOLON estatuto .)
+    ELSE            reduce using rule 29 (asignacion -> ID EQUALS expresion SEMICOLON estatuto .)
 
 
 state 102
 
-    (25) expresion -> expresion MINUS expresion .
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (20) estatuto -> RCBRACKET .
 
-    SEMICOLON       reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    PLUS            reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    MINUS           reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    RBRACKET        reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    RPAREN          reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    QUOTES          reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    LPAREN          reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    INT             reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    FLOAT           reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    ID              reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    TO              reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    DO              reduce using rule 25 (expresion -> expresion MINUS expresion .)
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
-
-  ! TIMES           [ reduce using rule 25 (expresion -> expresion MINUS expresion .) ]
-  ! DIVIDE          [ reduce using rule 25 (expresion -> expresion MINUS expresion .) ]
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
+    $end            reduce using rule 20 (estatuto -> RCBRACKET .)
+    ELSE            reduce using rule 20 (estatuto -> RCBRACKET .)
 
 
 state 103
 
-    (26) expresion -> expresion TIMES expresion .
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (21) expresion -> expresion PLUS expresion .
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    SEMICOLON       reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    PLUS            reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    MINUS           reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    TIMES           reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    DIVIDE          reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    RBRACKET        reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    RPAREN          reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    QUOTES          reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    LPAREN          reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    INT             reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    FLOAT           reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    ID              reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    TO              reduce using rule 26 (expresion -> expresion TIMES expresion .)
-    DO              reduce using rule 26 (expresion -> expresion TIMES expresion .)
+    SEMICOLON       reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    PLUS            reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    MINUS           reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    RBRACKET        reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    RPAREN          reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    COMA            reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    TO              reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    DO              reduce using rule 21 (expresion -> expresion PLUS expresion .)
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
-  ! TIMES           [ shift and go to state 84 ]
-  ! DIVIDE          [ shift and go to state 85 ]
+  ! TIMES           [ reduce using rule 21 (expresion -> expresion PLUS expresion .) ]
+  ! DIVIDE          [ reduce using rule 21 (expresion -> expresion PLUS expresion .) ]
+  ! PLUS            [ shift and go to state 83 ]
+  ! MINUS           [ shift and go to state 84 ]
 
 
 state 104
 
-    (27) expresion -> expresion DIVIDE expresion .
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (22) expresion -> expresion MINUS expresion .
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    SEMICOLON       reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    PLUS            reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    MINUS           reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    TIMES           reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    DIVIDE          reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    RBRACKET        reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    RPAREN          reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    QUOTES          reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    LPAREN          reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    INT             reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    FLOAT           reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    ID              reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    TO              reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
-    DO              reduce using rule 27 (expresion -> expresion DIVIDE expresion .)
+    SEMICOLON       reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    PLUS            reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    MINUS           reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    RBRACKET        reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    RPAREN          reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    COMA            reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    TO              reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    DO              reduce using rule 22 (expresion -> expresion MINUS expresion .)
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
-  ! PLUS            [ shift and go to state 82 ]
-  ! MINUS           [ shift and go to state 83 ]
-  ! TIMES           [ shift and go to state 84 ]
-  ! DIVIDE          [ shift and go to state 85 ]
+  ! TIMES           [ reduce using rule 22 (expresion -> expresion MINUS expresion .) ]
+  ! DIVIDE          [ reduce using rule 22 (expresion -> expresion MINUS expresion .) ]
+  ! PLUS            [ shift and go to state 83 ]
+  ! MINUS           [ shift and go to state 84 ]
 
 
 state 105
 
-    (28) expresion -> LPAREN expresion RPAREN .
+    (23) expresion -> expresion TIMES expresion .
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    SEMICOLON       reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    PLUS            reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    MINUS           reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    TIMES           reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    DIVIDE          reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    RBRACKET        reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    RPAREN          reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    QUOTES          reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    LPAREN          reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    INT             reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    FLOAT           reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    ID              reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    TO              reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
-    DO              reduce using rule 28 (expresion -> LPAREN expresion RPAREN .)
+    SEMICOLON       reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    PLUS            reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    MINUS           reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    TIMES           reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    DIVIDE          reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    RBRACKET        reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    RPAREN          reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    COMA            reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    TO              reduce using rule 23 (expresion -> expresion TIMES expresion .)
+    DO              reduce using rule 23 (expresion -> expresion TIMES expresion .)
+
+  ! PLUS            [ shift and go to state 83 ]
+  ! MINUS           [ shift and go to state 84 ]
+  ! TIMES           [ shift and go to state 85 ]
+  ! DIVIDE          [ shift and go to state 86 ]
 
 
 state 106
 
-    (22) asignacion -> ID LBRACKET expresion RBRACKET EQUALS . expresion SEMICOLON estatuto
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
+    (24) expresion -> expresion DIVIDE expresion .
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
+    SEMICOLON       reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    PLUS            reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    MINUS           reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    TIMES           reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    DIVIDE          reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    RBRACKET        reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    RPAREN          reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    COMA            reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    TO              reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
+    DO              reduce using rule 24 (expresion -> expresion DIVIDE expresion .)
 
-    expresion                      shift and go to state 114
+  ! PLUS            [ shift and go to state 83 ]
+  ! MINUS           [ shift and go to state 84 ]
+  ! TIMES           [ shift and go to state 85 ]
+  ! DIVIDE          [ shift and go to state 86 ]
+
 
 state 107
 
-    (23) retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON .
+    (25) expresion -> LPAREN expresion RPAREN .
 
-    $end            reduce using rule 23 (retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON .)
-    ELSE            reduce using rule 23 (retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON .)
+    SEMICOLON       reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    PLUS            reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    MINUS           reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    TIMES           reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    DIVIDE          reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    RBRACKET        reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    RPAREN          reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    COMA            reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    TO              reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
+    DO              reduce using rule 25 (expresion -> LPAREN expresion RPAREN .)
 
 
 state 108
 
-    (38) escritura2 -> RPAREN SEMICOLON .
+    (30) asignacion -> ID LBRACKET expresion RBRACKET EQUALS . expresion SEMICOLON estatuto
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
 
-    $end            reduce using rule 38 (escritura2 -> RPAREN SEMICOLON .)
-    ELSE            reduce using rule 38 (escritura2 -> RPAREN SEMICOLON .)
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
 
+    expresion                      shift and go to state 116
 
 state 109
 
-    (41) letrero1 -> CHAR QUOTES .
+    (31) retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON .
 
-    RPAREN          reduce using rule 41 (letrero1 -> CHAR QUOTES .)
-    QUOTES          reduce using rule 41 (letrero1 -> CHAR QUOTES .)
-    LPAREN          reduce using rule 41 (letrero1 -> CHAR QUOTES .)
-    INT             reduce using rule 41 (letrero1 -> CHAR QUOTES .)
-    FLOAT           reduce using rule 41 (letrero1 -> CHAR QUOTES .)
-    ID              reduce using rule 41 (letrero1 -> CHAR QUOTES .)
+    $end            reduce using rule 31 (retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON .)
+    ELSE            reduce using rule 31 (retornofuncion -> RETURN LPAREN expresion RPAREN SEMICOLON .)
 
 
 state 110
 
-    (42) letrero1 -> CHAR letrero1 .
+    (39) escritura2 -> COMA escritura1 .
 
-    RPAREN          reduce using rule 42 (letrero1 -> CHAR letrero1 .)
-    QUOTES          reduce using rule 42 (letrero1 -> CHAR letrero1 .)
-    LPAREN          reduce using rule 42 (letrero1 -> CHAR letrero1 .)
-    INT             reduce using rule 42 (letrero1 -> CHAR letrero1 .)
-    FLOAT           reduce using rule 42 (letrero1 -> CHAR letrero1 .)
-    ID              reduce using rule 42 (letrero1 -> CHAR letrero1 .)
+    $end            reduce using rule 39 (escritura2 -> COMA escritura1 .)
+    ELSE            reduce using rule 39 (escritura2 -> COMA escritura1 .)
+    COMA            reduce using rule 39 (escritura2 -> COMA escritura1 .)
 
 
 state 111
+
+    (40) letrero -> QUOTES CHAR QUOTES .
+    (40) letrero -> QUOTES . CHAR QUOTES
+    (41) letrero -> QUOTES . CHAR letrero
+
+    COMA            reduce using rule 40 (letrero -> QUOTES CHAR QUOTES .)
+    CHAR            shift and go to state 96
+
+
+state 112
+
+    (41) letrero -> QUOTES CHAR letrero .
+
+    COMA            reduce using rule 41 (letrero -> QUOTES CHAR letrero .)
+
+
+state 113
 
     (45) decision -> IF LPAREN expresion RPAREN THEN . bloque decision1
     (12) bloque -> . LCBRACKET estatuto
@@ -1568,9 +1542,9 @@ state 111
 
     LCBRACKET       shift and go to state 36
 
-    bloque                         shift and go to state 115
+    bloque                         shift and go to state 117
 
-state 112
+state 114
 
     (47) condicional -> WHILE LPAREN expresion RPAREN DO . bloque
     (12) bloque -> . LCBRACKET estatuto
@@ -1578,52 +1552,52 @@ state 112
 
     LCBRACKET       shift and go to state 36
 
-    bloque                         shift and go to state 116
-
-state 113
-
-    (48) nocondicional -> FOR ID EQUALS expresion TO . expresion DO bloque
-    (24) expresion -> . expresion PLUS expresion
-    (25) expresion -> . expresion MINUS expresion
-    (26) expresion -> . expresion TIMES expresion
-    (27) expresion -> . expresion DIVIDE expresion
-    (28) expresion -> . LPAREN expresion RPAREN
-    (29) expresion -> . INT
-    (30) expresion -> . FLOAT
-    (31) expresion -> . ID
-
-    LPAREN          shift and go to state 66
-    INT             shift and go to state 67
-    FLOAT           shift and go to state 68
-    ID              shift and go to state 64
-
-    expresion                      shift and go to state 117
-
-state 114
-
-    (22) asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion . SEMICOLON estatuto
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
-
-    SEMICOLON       shift and go to state 118
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
-
+    bloque                         shift and go to state 118
 
 state 115
+
+    (48) nocondicional -> FOR ID EQUALS expresion TO . expresion DO bloque
+    (21) expresion -> . expresion PLUS expresion
+    (22) expresion -> . expresion MINUS expresion
+    (23) expresion -> . expresion TIMES expresion
+    (24) expresion -> . expresion DIVIDE expresion
+    (25) expresion -> . LPAREN expresion RPAREN
+    (26) expresion -> . INT
+    (27) expresion -> . FLOAT
+    (28) expresion -> . ID
+
+    LPAREN          shift and go to state 65
+    INT             shift and go to state 66
+    FLOAT           shift and go to state 67
+    ID              shift and go to state 63
+
+    expresion                      shift and go to state 119
+
+state 116
+
+    (30) asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion . SEMICOLON estatuto
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
+
+    SEMICOLON       shift and go to state 120
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
+
+
+state 117
 
     (45) decision -> IF LPAREN expresion RPAREN THEN bloque . decision1
     (46) decision1 -> . ELSE bloque
 
-    ELSE            shift and go to state 120
+    ELSE            shift and go to state 122
 
-    decision1                      shift and go to state 119
+    decision1                      shift and go to state 121
 
-state 116
+state 118
 
     (47) condicional -> WHILE LPAREN expresion RPAREN DO bloque .
 
@@ -1631,34 +1605,34 @@ state 116
     ELSE            reduce using rule 47 (condicional -> WHILE LPAREN expresion RPAREN DO bloque .)
 
 
-state 117
+state 119
 
     (48) nocondicional -> FOR ID EQUALS expresion TO expresion . DO bloque
-    (24) expresion -> expresion . PLUS expresion
-    (25) expresion -> expresion . MINUS expresion
-    (26) expresion -> expresion . TIMES expresion
-    (27) expresion -> expresion . DIVIDE expresion
+    (21) expresion -> expresion . PLUS expresion
+    (22) expresion -> expresion . MINUS expresion
+    (23) expresion -> expresion . TIMES expresion
+    (24) expresion -> expresion . DIVIDE expresion
 
-    DO              shift and go to state 121
-    PLUS            shift and go to state 82
-    MINUS           shift and go to state 83
-    TIMES           shift and go to state 84
-    DIVIDE          shift and go to state 85
+    DO              shift and go to state 123
+    PLUS            shift and go to state 83
+    MINUS           shift and go to state 84
+    TIMES           shift and go to state 85
+    DIVIDE          shift and go to state 86
 
 
-state 118
+state 120
 
-    (22) asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON . estatuto
+    (30) asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON . estatuto
     (14) estatuto -> . asignacion
     (15) estatuto -> . retornofuncion
     (16) estatuto -> . lectura
     (17) estatuto -> . escritura
     (18) estatuto -> . decision
     (19) estatuto -> . repeticion
-    (20) estatuto -> . RBRACKET
-    (21) asignacion -> . ID EQUALS expresion SEMICOLON estatuto
-    (22) asignacion -> . ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
-    (23) retornofuncion -> . RETURN LPAREN expresion RPAREN SEMICOLON
+    (20) estatuto -> . RCBRACKET
+    (29) asignacion -> . ID EQUALS expresion SEMICOLON estatuto
+    (30) asignacion -> . ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto
+    (31) retornofuncion -> . RETURN LPAREN expresion RPAREN SEMICOLON
     (32) lectura -> . READ LPAREN lectura1
     (35) escritura -> . WRITE LPAREN escritura1
     (45) decision -> . IF LPAREN expresion RPAREN THEN bloque decision1
@@ -1667,26 +1641,26 @@ state 118
     (47) condicional -> . WHILE LPAREN expresion RPAREN DO bloque
     (48) nocondicional -> . FOR ID EQUALS expresion TO expresion DO bloque
 
-    RBRACKET        shift and go to state 46
-    ID              shift and go to state 47
-    RETURN          shift and go to state 48
-    READ            shift and go to state 49
-    WRITE           shift and go to state 50
-    IF              shift and go to state 51
-    WHILE           shift and go to state 54
-    FOR             shift and go to state 55
+    RCBRACKET       shift and go to state 102
+    ID              shift and go to state 46
+    RETURN          shift and go to state 47
+    READ            shift and go to state 48
+    WRITE           shift and go to state 49
+    IF              shift and go to state 50
+    WHILE           shift and go to state 53
+    FOR             shift and go to state 54
 
-    estatuto                       shift and go to state 122
+    estatuto                       shift and go to state 124
     asignacion                     shift and go to state 40
     retornofuncion                 shift and go to state 41
     lectura                        shift and go to state 42
     escritura                      shift and go to state 43
     decision                       shift and go to state 44
     repeticion                     shift and go to state 45
-    condicional                    shift and go to state 52
-    nocondicional                  shift and go to state 53
+    condicional                    shift and go to state 51
+    nocondicional                  shift and go to state 52
 
-state 119
+state 121
 
     (45) decision -> IF LPAREN expresion RPAREN THEN bloque decision1 .
 
@@ -1694,7 +1668,7 @@ state 119
     ELSE            reduce using rule 45 (decision -> IF LPAREN expresion RPAREN THEN bloque decision1 .)
 
 
-state 120
+state 122
 
     (46) decision1 -> ELSE . bloque
     (12) bloque -> . LCBRACKET estatuto
@@ -1702,9 +1676,9 @@ state 120
 
     LCBRACKET       shift and go to state 36
 
-    bloque                         shift and go to state 123
+    bloque                         shift and go to state 125
 
-state 121
+state 123
 
     (48) nocondicional -> FOR ID EQUALS expresion TO expresion DO . bloque
     (12) bloque -> . LCBRACKET estatuto
@@ -1712,17 +1686,17 @@ state 121
 
     LCBRACKET       shift and go to state 36
 
-    bloque                         shift and go to state 124
+    bloque                         shift and go to state 126
 
-state 122
+state 124
 
-    (22) asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto .
+    (30) asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto .
 
-    $end            reduce using rule 22 (asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto .)
-    ELSE            reduce using rule 22 (asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto .)
+    $end            reduce using rule 30 (asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto .)
+    ELSE            reduce using rule 30 (asignacion -> ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto .)
 
 
-state 123
+state 125
 
     (46) decision1 -> ELSE bloque .
 
@@ -1730,10 +1704,15 @@ state 123
     ELSE            reduce using rule 46 (decision1 -> ELSE bloque .)
 
 
-state 124
+state 126
 
     (48) nocondicional -> FOR ID EQUALS expresion TO expresion DO bloque .
 
     $end            reduce using rule 48 (nocondicional -> FOR ID EQUALS expresion TO expresion DO bloque .)
     ELSE            reduce using rule 48 (nocondicional -> FOR ID EQUALS expresion TO expresion DO bloque .)
 
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: reduce/reduce conflict in state 39 resolved using rule (bloque -> LCBRACKET RCBRACKET)
+WARNING: rejected rule (estatuto -> RCBRACKET) in state 39

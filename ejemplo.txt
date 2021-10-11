@@ -6,5 +6,6 @@ VARS
 function int fact (int: j)
 VARS int: j;
 {
-	j = 6;
+	i = k;
+	h = k;
 }

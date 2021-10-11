@@ -137,7 +137,7 @@ def t_FUNCTION(t):
     t.type = reserved.get(t.value,'FUNCTION')
     return t
 
-def t_CHAR(t):
+def t_CHARP(t):
     r'char'
     t.type = reserved.get(t.value,'CHAR')
     return t

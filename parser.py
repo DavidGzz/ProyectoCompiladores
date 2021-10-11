@@ -36,10 +36,6 @@ def p_bloque(p):
     '''bloque : LCBRACKET estatuto
             | LCBRACKET RCBRACKET'''
 
-#def p_bloque1(p):
-#    '''bloque1 : RCBRACKET
-#                | estatuto'''
-
 def p_estatuto(p):
     '''estatuto : asignacion
                 | retornofuncion
@@ -47,15 +43,8 @@ def p_estatuto(p):
                 | escritura
                 | decision
                 | repeticion
-                | RBRACKET'''
+                | RCBRACKET'''
     #estatuto :lfvoid
-
-def p_asignacion(p):
-    '''asignacion : ID EQUALS expresion SEMICOLON estatuto
-                | ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto'''
-
-def p_retornofuncion(p):
-    '''retornofuncion : RETURN LPAREN expresion RPAREN SEMICOLON'''
 
 def p_expresion(p): 
     '''expresion : expresion PLUS expresion
@@ -67,30 +56,35 @@ def p_expresion(p):
                 | FLOAT
                 | ID'''
 
+def p_asignacion(p):
+    '''asignacion : ID EQUALS expresion SEMICOLON estatuto
+                | ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto'''
+
+def p_retornofuncion(p):
+    '''retornofuncion : RETURN LPAREN expresion RPAREN SEMICOLON'''
+
 def p_lectura(p):
     'lectura : READ LPAREN lectura1'
 
 def p_lectura1(p):
-    '''lectura1 : RPAREN SEMICOLON
-                | listaids lectura1'''
+    '''lectura1 : listaids SEMICOLON
+                | RPAREN SEMICOLON'''
 
 def p_escritura(p):
     'escritura : WRITE LPAREN escritura1'
 
 def p_escritura1(p):
     '''escritura1 : letrero escritura2
-                | expresion escritura2'''
+                | expresion escritura2
+                | RPAREN SEMICOLON'''
 
 def p_escritura2(p):
-    '''escritura2 : RPAREN SEMICOLON
-                | escritura1'''
+    '''escritura2 : COMA escritura1'''
 
 def p_letrero(p):
-    'letrero : QUOTES letrero1'
-
-def p_letrero1(p):
-    '''letrero1 : CHAR QUOTES
-                | CHAR letrero1'''
+    '''letrero : QUOTES CHAR QUOTES
+            | QUOTES CHAR letrero
+            | COMA escritura1'''
 
 def p_repeticion(p):
     '''repeticion : condicional
