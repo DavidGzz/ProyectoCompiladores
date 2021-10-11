@@ -7,10 +7,10 @@ precedence = (
  )
 
 def p_programa(p):
-    '''programa : PROGRAMA ID SEMICOLON variables function bloque'''
+    '''programa : PROGRAMA ID SEMICOLON variables function'''
 
 def p_variables(p):
-    'variables : VARS variables1'
+    '''variables : VARS variables1'''
     #'variables : VARS tipo COLON ID listaids | VARS tipo COLON ID LBRACKET INT RBRACKET listaids'
 
 def p_variables1(p):
@@ -20,47 +20,39 @@ def p_listaids(p):
     'listaids : ID listaids1'
 
 def p_listaids1(p):
-    '''listaids1 : COMA ID listaids1 
-                | listaids2 
-                | SEMICOLON'''
+    '''listaids1 : COMA ID listaids1
+                | listaids2
+                | SEMICOLON variables1
+                | SEMICOLON
+                | RPAREN'''
 
 def p_listaids2(p):
-    '''listaids2 : LBRACKET INT RBRACKET listaids1 
-                | LBRACKET INT RBRACKET SEMICOLON 
-                | SEMICOLON'''
-
-def p_tipo(p):
-    '''tipo : INT 
-            | FLOAT 
-            | CHAR'''
+    '''listaids2 : LBRACKET INT RBRACKET listaids1'''
 
 def p_function(p):
-    '''function : FUNCTION tiporetorno ID LPAREN variables1 RPAREN SEMICOLON variables bloque'''
+    '''function : FUNCTION tiporetorno ID LPAREN variables1 variables bloque'''
 
 def p_bloque(p):
-    '''bloque : LCBRACKET estatuto bloque1 
+    '''bloque : LCBRACKET estatuto
             | LCBRACKET RCBRACKET'''
 
-def p_bloque1(p):
-    '''bloque1 : RCBRACKET 
-                | estatuto'''
+#def p_bloque1(p):
+#    '''bloque1 : RCBRACKET
+#                | estatuto'''
 
 def p_estatuto(p):
-    '''estatuto : asignacion 
-                | retornofuncion 
-                | lectura 
+    '''estatuto : asignacion
+                | retornofuncion
+                | lectura
                 | escritura
                 | decision
-                | repeticion'''
-    #'estatuto : asignacion | lfvoid | retornofuncion | lectura | escritura | decision | repeticion'
-
-def p_tiporetorno(p):
-    '''tiporetorno : INT 
-                | FLOAT''' #or eps
+                | repeticion
+                | RBRACKET'''
+    #estatuto :lfvoid
 
 def p_asignacion(p):
-    '''asignacion : ID EQUALS expresion SEMICOLON 
-                | ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON'''
+    '''asignacion : ID EQUALS expresion SEMICOLON estatuto
+                | ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto'''
 
 def p_retornofuncion(p):
     '''retornofuncion : RETURN LPAREN expresion RPAREN SEMICOLON'''
@@ -72,31 +64,32 @@ def p_expresion(p):
                 | expresion DIVIDE expresion
                 | LPAREN expresion RPAREN
                 | INT
-                | FLOAT'''
+                | FLOAT
+                | ID'''
 
 def p_lectura(p):
     'lectura : READ LPAREN lectura1'
 
 def p_lectura1(p):
-    '''lectura1 : RPAREN SEMICOLON 
+    '''lectura1 : RPAREN SEMICOLON
                 | listaids lectura1'''
 
 def p_escritura(p):
     'escritura : WRITE LPAREN escritura1'
 
 def p_escritura1(p):
-    '''escritura1 : letrero escritura2 
+    '''escritura1 : letrero escritura2
                 | expresion escritura2'''
 
 def p_escritura2(p):
-    '''escritura2 : RPAREN SEMICOLON 
+    '''escritura2 : RPAREN SEMICOLON
                 | escritura1'''
 
 def p_letrero(p):
     'letrero : QUOTES letrero1'
 
 def p_letrero1(p):
-    '''letrero1 : CHAR QUOTES 
+    '''letrero1 : CHAR QUOTES
                 | CHAR letrero1'''
 
 def p_repeticion(p):
@@ -115,6 +108,15 @@ def p_condicional(p):
 def p_nocondicional(p):
     '''nocondicional : FOR ID EQUALS expresion TO expresion DO bloque'''
 
+def p_tipo(p):
+    '''tipo : INT
+            | FLOAT
+            | CHAR'''
+
+def p_tiporetorno(p):
+    '''tiporetorno : INT
+                | FLOAT''' #or void
+
 def p_error(p):
     print("Syntax error in input!")
 
@@ -125,7 +127,6 @@ f = open("ejemplo.txt", "r")
 while True:
     try:
         s = f.read()
-        print(s)
     except EOFError:
         break
     if not s: break

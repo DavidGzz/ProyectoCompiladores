@@ -17,7 +17,7 @@ reserved = {
     'char' : 'CHAR',
     'read' : 'READ',
     'write' : 'WRITE',
-    'eps' : 'EPS',
+    'int' : 'INT',
 }
 
 tokens = [
@@ -43,7 +43,6 @@ tokens = [
     'OR',
     'QUOTES',
     'AND',
-    'EMPTY'
 ] + list(reserved.values())
 
 t_PLUS = r'\+'
@@ -57,8 +56,8 @@ t_LPAREN = r'\('
 t_RPAREN = r'\)'
 t_RBRACKET = r'\]'
 t_LBRACKET = r'\['
-t_RCBRACKET = r'\{'
-t_LCBRACKET = r'\}'
+t_LCBRACKET = r'\{'
+t_RCBRACKET = r'\}'
 t_SQUOTES = r'\''
 t_COLON = r'\:'
 t_SEMICOLON = r'\;'
@@ -133,6 +132,11 @@ def t_RETURN(t):
     t.type = reserved.get(t.value,'RETURN')
     return t
 
+def t_FUNCTION(t):
+    r'function'
+    t.type = reserved.get(t.value,'FUNCTION')
+    return t
+
 def t_CHAR(t):
     r'char'
     t.type = reserved.get(t.value,'CHAR')
@@ -157,10 +161,6 @@ def t_ID(t):
      r'[a-zA-Z]([a-zA-Z] | \d+)*'
      t.type = reserved.get(t.value,'ID')
      return t
-
-def p_EMPTY(p):
-    'empty :'
-    pass
     
 def t_newline(t):
     r'\n+'
@@ -174,14 +174,11 @@ def t_error(t):
 
 lexer = lex.lex()
 
-# Test it out
 f = open("ejemplo.txt", "r")
 data = f.read()
- 
-# Give the lexer some input
+
 lexer.input(data)
- 
-# Tokenize
+
 while True:
     tok = lexer.token()
     if not tok: 
