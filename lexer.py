@@ -18,6 +18,7 @@ reserved = {
     'read' : 'READ',
     'write' : 'WRITE',
     'int' : 'INT',
+    'void' : 'VOID'
 }
 
 tokens = [
@@ -80,6 +81,11 @@ def t_PROGRAMA(t):
 def t_VARS(t):
     r'VARS | vars'
     t.type = reserved.get(t.value,'VARS')
+    return t
+
+def t_VOID(t):
+    r'VOID | void'
+    t.type = reserved.get(t.value,'VOID')
     return t
 
 def t_IF(t):

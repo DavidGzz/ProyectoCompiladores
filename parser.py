@@ -51,6 +51,8 @@ def p_expresion(p):
                 | expresion MINUS expresion
                 | expresion TIMES expresion
                 | expresion DIVIDE expresion
+                | expresion GTHAN expresion
+                | expresion LTHAN expresion
                 | LPAREN expresion RPAREN
                 | INT
                 | FLOAT
@@ -61,46 +63,47 @@ def p_asignacion(p):
                 | ID LBRACKET expresion RBRACKET EQUALS expresion SEMICOLON estatuto'''
 
 def p_retornofuncion(p):
-    '''retornofuncion : RETURN LPAREN expresion RPAREN SEMICOLON'''
+    '''retornofuncion : RETURN LPAREN expresion RPAREN SEMICOLON estatuto'''
 
 def p_lectura(p):
     'lectura : READ LPAREN lectura1'
 
 def p_lectura1(p):
-    '''lectura1 : listaids SEMICOLON
-                | RPAREN SEMICOLON'''
+    '''lectura1 : listaids SEMICOLON estatuto
+                | RPAREN SEMICOLON estatuto'''
 
 def p_escritura(p):
-    'escritura : WRITE LPAREN escritura1'
+    'escritura : WRITE LPAREN escritura1 RPAREN SEMICOLON estatuto'
 
 def p_escritura1(p):
-    '''escritura1 : letrero escritura2
-                | expresion escritura2
-                | RPAREN SEMICOLON'''
-
-def p_escritura2(p):
-    '''escritura2 : COMA escritura1'''
+    '''escritura1 : letrero 
+                | letrero COMA escritura1
+                | expresion
+                | expresion COMA escritura1'''
 
 def p_letrero(p):
-    '''letrero : QUOTES CHAR QUOTES
-            | QUOTES CHAR letrero
+    '''letrero : QUOTES ID QUOTES
             | COMA escritura1'''
+
+def p_decision(p):
+    '''decision : IF LPAREN expresion RPAREN THEN bloque estatuto
+                | IF LPAREN expresion RPAREN THEN bloque decision1'''
+
+def p_decision1(p):
+    '''decision1 : ELSE bloque
+                | ELSE bloque estatuto''' #falta el hacer nada
 
 def p_repeticion(p):
     '''repeticion : condicional
                 | nocondicional'''
 
-def p_decision(p):
-    '''decision : IF LPAREN expresion RPAREN THEN bloque decision1'''
-
-def p_decision1(p):
-    '''decision1 : ELSE bloque''' #falta el hacer nada
-
 def p_condicional(p):
-    '''condicional : WHILE LPAREN expresion RPAREN DO bloque'''
+    '''condicional :  WHILE LPAREN expresion RPAREN DO bloque
+                | WHILE LPAREN expresion RPAREN DO bloque estatuto'''
 
 def p_nocondicional(p):
-    '''nocondicional : FOR ID EQUALS expresion TO expresion DO bloque'''
+    '''nocondicional : FOR ID EQUALS expresion TO expresion DO bloque
+                    | FOR ID EQUALS expresion TO expresion DO bloque estatuto'''
 
 def p_tipo(p):
     '''tipo : INT
@@ -109,7 +112,8 @@ def p_tipo(p):
 
 def p_tiporetorno(p):
     '''tiporetorno : INT
-                | FLOAT''' #or void
+                | FLOAT
+                | VOID''' #or void
 
 def p_error(p):
     print("Syntax error in input!")
