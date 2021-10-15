@@ -18,7 +18,9 @@ reserved = {
     'read' : 'READ',
     'write' : 'WRITE',
     'int' : 'INT',
-    'void' : 'VOID'
+    'void' : 'VOID',
+    'arreglo' : 'ARREGLO',
+    'principal' : 'PRINCIPAL'
 }
 
 tokens = [
@@ -44,6 +46,7 @@ tokens = [
     'OR',
     'QUOTES',
     'AND',
+    'EQUALSDOBLE',
 ] + list(reserved.values())
 
 t_PLUS = r'\+'
@@ -52,6 +55,7 @@ t_TIMES = r'\*'
 t_DIVIDE = r'/'
 t_GTHAN = r'\>'
 t_LTHAN = r'\<'
+t_EQUALSDOBLE = r'\=\='
 t_EQUALS = r'\='
 t_LPAREN = r'\('
 t_RPAREN = r'\)'
@@ -76,6 +80,11 @@ def t_INTP(t):
 def t_PROGRAMA(t):
     r'programa | PROGRAMA'
     t.type = reserved.get(t.value,'PROGRAMA')
+    return t
+
+def t_PRINCIPAL(t):
+    r'principal | PRINCIPAL'
+    t.type = reserved.get(t.value,'PRINCIPAL')
     return t
 
 def t_VARS(t):
@@ -163,6 +172,11 @@ def t_FLOAT(t):
     t.value = float(t.value)
     return t
 
+def t_ARREGLO(t):
+     r'[a-zA-Z]([a-zA-Z] | \d+)*\[\d+\]'
+     t.type = reserved.get(t.value,'ARREGLO')
+     return t
+
 def t_ID(t):
      r'[a-zA-Z]([a-zA-Z] | \d+)*'
      t.type = reserved.get(t.value,'ID')
@@ -180,7 +194,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-f = open("ejemplo.txt", "r")
+f = open("completo.txt", "r")
 data = f.read()
 
 lexer.input(data)
