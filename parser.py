@@ -21,26 +21,43 @@ def p_variables(p):
     '''variables : VARS variables1'''
 
 def p_variables1(p):
-    '''variables1 : tipo COLON listaids'''
+    '''variables1 : INT COLON listaidsInt
+                | FLOAT COLON listaidsFloat
+                | CHAR COLON listaidsChar
+                | '''
 
-def p_listaids(p):
-    '''listaids : ID listaids1'''
+def p_listaidsInt(p):
+    '''listaidsInt : ID COMA listaidsInt
+                | ID SEMICOLON variables1
+                | ID variables1'''
+    pilaTipos.append('int')
     pilaVariables.append(p[1])
+    print(pilaVariables)
 
+def p_listaidsFloat(p):
+    '''listaidsFloat : ID COMA listaidsFloat
+                | ID SEMICOLON variables1
+                | ID variables1'''
+    pilaTipos.append('float')
+    pilaVariables.append(p[1])
+    print(pilaVariables)
 
-def p_listaids1(p):
-    '''listaids1 : COMA listaids2
-                | SEMICOLON variables1
-                | SEMICOLON
-                | RPAREN'''
-
-def p_listaids2(p):
-    '''listaids2 : ID listaids1
-                | ARREGLO listaids1'''
+def p_listaidsChar(p):
+    '''listaidsChar : ID COMA listaidsChar
+                | ID SEMICOLON variables1
+                | ID variables1'''
+    pilaTipos.append('char')
+    pilaVariables.append(p[1])
+    print(pilaVariables)
 
 def p_function(p):
-    '''function : FUNCTION tiporetorno ID LPAREN variables1 variables bloque
-                | FUNCTION tiporetorno ID LPAREN variables1 variables bloque function'''
+    '''function : FUNCTION INT ID LPAREN variables1 RPAREN variables bloque
+                | FUNCTION FLOAT ID LPAREN variables1 RPAREN variables bloque
+                | FUNCTION INT ID LPAREN variables1 RPAREN variables bloque function
+                | FUNCTION FLOAT ID LPAREN variables1 RPAREN variables bloque function
+                | '''
+    pilaTipos.append(p[2])
+    pilaVariables.append(p[3])
 
 def p_bloque(p):
     '''bloque : LCBRACKET estatuto RCBRACKET
@@ -74,6 +91,14 @@ def p_asignacion(p):
                 | ID EQUALS expresion SEMICOLON
                 | ARREGLO EQUALS expresion SEMICOLON estatuto
                 | ARREGLO EQUALS expresion SEMICOLON'''
+    a = 0
+    for x in pilaVariables:
+        if p[1] == pilaVariables[a]:
+            break
+        elif p[1] != pilaVariables[a]:
+            if a == len(pilaVariables) - 1:
+                p_error(p[1])
+        a = a + 1
 
 def p_retornofuncion(p):
     '''retornofuncion : RETURN LPAREN expresion RPAREN SEMICOLON'''
@@ -82,8 +107,9 @@ def p_lectura(p):
     'lectura : READ LPAREN lectura1'
 
 def p_lectura1(p):
-    '''lectura1 : listaids SEMICOLON estatuto
-                | listaids SEMICOLON
+    #Cambiar listaids
+    '''lectura1 : listaidsInt SEMICOLON estatuto
+                | listaidsInt SEMICOLON
                 | RPAREN SEMICOLON estatuto
                 | RPAREN SEMICOLON'''
 
@@ -126,12 +152,6 @@ def p_nocondicional(p):
     '''nocondicional : FOR ID EQUALS expresion TO expresion DO bloque
                     | FOR ID EQUALS expresion TO expresion DO bloque estatuto'''
 
-def p_tipo(p):
-    '''tipo : INT
-            | FLOAT
-            | CHAR'''
-    pilaTipos.append(p[1])
-
 def p_tiporetorno(p):
     '''tiporetorno : INT
                 | FLOAT
@@ -139,10 +159,11 @@ def p_tiporetorno(p):
 
 def p_error(p):
     print("Syntax error in input!")
+    print(p)
 
 parser = yacc.yacc()
 
-f = open("completo.txt", "r")
+f = open("ejemplo.txt", "r")
 
 while True:
     try:
@@ -150,9 +171,8 @@ while True:
     except EOFError:
         break
     if not s: break
-    result = parser.parse(s)
+    parser.parse(s)
     print(pilaVariables)
     print(pilaTipos)
-    print(result)
 
 f.close()

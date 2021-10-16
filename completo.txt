@@ -1,9 +1,9 @@
 PROGRAMA MyRike;
 VARS
-	int: i, j, p, arreglo[10];
+	int: i, j, p, a[9];
 	float: valor;
 
-function int fact (int: j)
+function int fact(int: j)
 VARS int: i;
 {
 	i = j + (p - j * 2 + j);
@@ -11,7 +11,7 @@ VARS int: i;
 		return (j);
 	}
 	else{
-		return(j * y);
+		return(j * fact(e));
 	}
 }
 
@@ -20,11 +20,11 @@ VARS int: x;
 {
 	x = 1;
 	while(x < 11) do{
-		y = y * arreglo[10];
+		y = y * p[10];
 		x = x + 1;
 	}
 	
-	write(arreglo[10]);
+	write(l[10]);
 	write("acumulado", y);
 }
 
@@ -33,10 +33,10 @@ principal()
 	read(p);
 	j = p * 2;
 	for i = 1 to 10 do{
-		arreglo[1] = p + 1;
+		r[1] = p + 1;
 	}
 	while(i > 0) do{
-		j = arreglo[1];
+		j = e[1];
 		write(j, i);
 		i = i + 1;
 	}

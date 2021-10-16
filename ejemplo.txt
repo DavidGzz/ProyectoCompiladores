@@ -1,0 +1,19 @@
+PROGRAMA MyRike;
+VARS
+	int: i, k, o;
+	float: valor, n;
+
+function int fact1(int: l)
+VARS char: m;
+{
+	q = 9;
+}
+
+function int fact(float: w)
+VARS char: q;
+{
+	w = 9;
+}
+
+principal(){
+}

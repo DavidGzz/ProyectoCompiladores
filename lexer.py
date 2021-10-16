@@ -148,7 +148,7 @@ def t_RETURN(t):
     return t
 
 def t_FUNCTION(t):
-    r'function'
+    r'function' #identificar todo FUNCTION tiporetorno ID LPAREN variables1 variables bloque
     t.type = reserved.get(t.value,'FUNCTION')
     return t
 
@@ -194,7 +194,7 @@ def t_error(t):
 
 lexer = lex.lex()
 
-f = open("completo.txt", "r")
+f = open("ejemplo.txt", "r")
 data = f.read()
 
 lexer.input(data)
