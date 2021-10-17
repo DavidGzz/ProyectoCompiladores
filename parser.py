@@ -5,6 +5,7 @@ pilaVariables = []
 pilaVariables1 =[]
 pilaTipos = []
 pilaOperadores = []
+pilaV = [[], []]
 
 precedence = (
      ('left', 'PLUS', 'MINUS'),
@@ -27,35 +28,32 @@ def p_variables1(p):
                 | '''
 
 def p_listaidsInt(p):
-    '''listaidsInt : ID COMA listaidsInt
-                | ID SEMICOLON variables1
-                | ID variables1'''
+    '''listaidsInt : ids COMA listaidsInt
+                | ids SEMICOLON variables1
+                | ids variables1'''
     pilaTipos.append('int')
-    pilaVariables.append(p[1])
-    print(pilaVariables)
 
 def p_listaidsFloat(p):
-    '''listaidsFloat : ID COMA listaidsFloat
-                | ID SEMICOLON variables1
-                | ID variables1'''
+    '''listaidsFloat : ids COMA listaidsFloat
+                | ids SEMICOLON variables1
+                | ids variables1'''
     pilaTipos.append('float')
-    pilaVariables.append(p[1])
-    print(pilaVariables)
 
 def p_listaidsChar(p):
-    '''listaidsChar : ID COMA listaidsChar
-                | ID SEMICOLON variables1
-                | ID variables1'''
+    '''listaidsChar : ids COMA listaidsChar
+                | ids SEMICOLON variables1
+                | ids variables1'''
     pilaTipos.append('char')
+
+def p_ids(p):
+    '''ids : ID'''
     pilaVariables.append(p[1])
-    print(pilaVariables)
 
 def p_function(p):
     '''function : FUNCTION INT ID LPAREN variables1 RPAREN variables bloque
                 | FUNCTION FLOAT ID LPAREN variables1 RPAREN variables bloque
                 | FUNCTION INT ID LPAREN variables1 RPAREN variables bloque function
-                | FUNCTION FLOAT ID LPAREN variables1 RPAREN variables bloque function
-                | '''
+                | FUNCTION FLOAT ID LPAREN variables1 RPAREN variables bloque function'''
     pilaTipos.append(p[2])
     pilaVariables.append(p[3])
 
@@ -97,7 +95,7 @@ def p_asignacion(p):
             break
         elif p[1] != pilaVariables[a]:
             if a == len(pilaVariables) - 1:
-                p_error(p[1])
+                p_error(p[1])    
         a = a + 1
 
 def p_retornofuncion(p):
@@ -152,13 +150,9 @@ def p_nocondicional(p):
     '''nocondicional : FOR ID EQUALS expresion TO expresion DO bloque
                     | FOR ID EQUALS expresion TO expresion DO bloque estatuto'''
 
-def p_tiporetorno(p):
-    '''tiporetorno : INT
-                | FLOAT
-                | VOID''' #or void
-
 def p_error(p):
     print("Syntax error in input!")
+    
     print(p)
 
 parser = yacc.yacc()

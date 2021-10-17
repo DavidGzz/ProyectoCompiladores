@@ -18,7 +18,7 @@ VARS int: i;
 function void calcula(int: y)
 VARS int: x;
 {
-	x = 1;
+	x = fun;
 	while(x < 11) do{
 		y = y * p[10];
 		x = x + 1;
