@@ -5,7 +5,7 @@ pilaVariables = []
 pilaVariables1 =[]
 pilaTipos = []
 pilaOperadores = []
-pilaV = [[], []]
+k = 0
 
 precedence = (
      ('left', 'PLUS', 'MINUS'),
@@ -31,31 +31,32 @@ def p_listaidsInt(p):
     '''listaidsInt : ids COMA listaidsInt
                 | ids SEMICOLON variables1
                 | ids variables1'''
-    pilaTipos.append('int')
+    p_tipos('int')
 
 def p_listaidsFloat(p):
     '''listaidsFloat : ids COMA listaidsFloat
                 | ids SEMICOLON variables1
                 | ids variables1'''
-    pilaTipos.append('float')
+    p_tipos('float')
 
 def p_listaidsChar(p):
     '''listaidsChar : ids COMA listaidsChar
                 | ids SEMICOLON variables1
                 | ids variables1'''
-    pilaTipos.append('char')
+    p_tipos('char')
+
+def p_tipos(p):
+    pilaTipos.append(p)
 
 def p_ids(p):
     '''ids : ID'''
     pilaVariables.append(p[1])
 
 def p_function(p):
-    '''function : FUNCTION INT ID LPAREN variables1 RPAREN variables bloque
-                | FUNCTION FLOAT ID LPAREN variables1 RPAREN variables bloque
-                | FUNCTION INT ID LPAREN variables1 RPAREN variables bloque function
-                | FUNCTION FLOAT ID LPAREN variables1 RPAREN variables bloque function'''
-    pilaTipos.append(p[2])
-    pilaVariables.append(p[3])
+    '''function : FUNCTION INT ids LPAREN variables1 RPAREN variables bloque
+                | FUNCTION FLOAT ids LPAREN variables1 RPAREN variables bloque
+                | FUNCTION INT ids LPAREN variables1 RPAREN variables bloque function
+                | FUNCTION FLOAT ids LPAREN variables1 RPAREN variables bloque function'''
 
 def p_bloque(p):
     '''bloque : LCBRACKET estatuto RCBRACKET
@@ -95,7 +96,7 @@ def p_asignacion(p):
             break
         elif p[1] != pilaVariables[a]:
             if a == len(pilaVariables) - 1:
-                p_error(p[1])    
+                p_error(p[1])
         a = a + 1
 
 def p_retornofuncion(p):
@@ -150,9 +151,13 @@ def p_nocondicional(p):
     '''nocondicional : FOR ID EQUALS expresion TO expresion DO bloque
                     | FOR ID EQUALS expresion TO expresion DO bloque estatuto'''
 
+def p_tiporetorno(p):
+    '''tiporetorno : INT
+                | FLOAT
+                | VOID''' #or void
+
 def p_error(p):
     print("Syntax error in input!")
-    
     print(p)
 
 parser = yacc.yacc()
