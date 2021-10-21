@@ -7,6 +7,7 @@ function int fact1(int: l)
 VARS char: m;
 {
 	l = 9;
+	n = i;
 }
 
 function int fact(float: w)
